@@ -98,7 +98,7 @@ public class MissionImpossible extends SearchProblem {
 	static SearchTreeNode solve(String grid, String strategy, boolean visualize) {
 		State initialState = new State(grid);
 		MissionImpossible problem = new MissionImpossible(initialState);
-		return generalSearch(problem, strategy, Integer.MAX_VALUE);
+		return (SearchTreeNode) Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
 
 	}
 
