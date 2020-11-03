@@ -1,5 +1,6 @@
 package Project;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class MissionImpossible extends SearchProblem {
@@ -8,12 +9,8 @@ public class MissionImpossible extends SearchProblem {
 		super(initialState);
 	}
 
-	enum Operator {
-		RIGHT, LEFT, UP, DOWN, PICKUP, DROP
-	}
-
 	@Override
-	State stateTransition(State state) {
+	State stateTransition(State state, Operator operator) {
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -100,6 +97,21 @@ public class MissionImpossible extends SearchProblem {
 
 	static SearchTreeNode solve(String grid, String strategy, boolean visualize) {
 		State initialState = new State(grid);
+		MissionImpossible problem = new MissionImpossible(initialState);
+		return generalSearch(problem, strategy, Integer.MAX_VALUE);
+
+	}
+
+	@Override
+	ArrayList<Operator> getOperators() {
+		ArrayList<Operator> ans = new ArrayList<>();
+		ans.add(Operator.DOWN);
+		ans.add(Operator.UP);
+		ans.add(Operator.LEFT);
+		ans.add(Operator.RIGHT);
+		ans.add(Operator.PICKUP);
+		ans.add(Operator.DROP);
+		return ans;
 
 	}
 
