@@ -9,7 +9,7 @@ public class State {
 		// TODO Auto-generated constructor stub
 		grid = new int[gridH][gridW];
 		this.numberOfMembers = numberOfMembers;
-		ethan = this.ethan;
+		this.ethan = ethan;
 		this.members = members;
 	}
 	
