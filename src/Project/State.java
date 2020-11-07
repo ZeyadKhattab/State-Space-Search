@@ -11,6 +11,7 @@ public class State {
 		this.numberOfMembers = numberOfMembers;
 		this.ethan = ethan;
 		this.members = members;
+		totalSaved = 0;
 	}
 	
 	Character getEthan() {
@@ -18,22 +19,6 @@ public class State {
 	}
 	
 	boolean moveUp() {
-		if(ethan.posY - 1 >= 0)
-		{
-			ethan.posY --;
-			return true;
-		}
-		return false;
-	}
-	boolean moveDown() {
-		if(ethan.posY + 1 <= gridH)
-		{
-			ethan.posY ++;
-			return true;
-		}
-		return false;
-	}
-	boolean moveLeft() {
 		if(ethan.posX - 1 >= 0)
 		{
 			ethan.posX --;
@@ -41,10 +26,26 @@ public class State {
 		}
 		return false;
 	}
-	boolean moveRight() {
-		if(ethan.posX + 1 <= gridW)
+	boolean moveDown() {
+		if(ethan.posX + 1 < gridH)
 		{
 			ethan.posX ++;
+			return true;
+		}
+		return false;
+	}
+	boolean moveLeft() {
+		if(ethan.posY - 1 >= 0)
+		{
+			ethan.posY --;
+			return true;
+		}
+		return false;
+	}
+	boolean moveRight() {
+		if(ethan.posY + 1 < gridW)
+		{
+			ethan.posY ++;
 			return true;
 		}
 		return false;
