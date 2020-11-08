@@ -4,19 +4,19 @@ import java.util.*;
 
 public class SearchList {
 
-	PriorityQueue<State> priorityQueue;
-	Stack<State> stack;
-	Queue<State> queue;
+	PriorityQueue<SearchTreeNode> priorityQueue;
+	Stack<SearchTreeNode> stack;
+	Queue<SearchTreeNode> queue;
 	String type;
 
 	public SearchList(String type) {
 		this.type = type;
 		if (this.type == "ucs")
-			priorityQueue = new PriorityQueue<State>();
+			priorityQueue = new PriorityQueue<SearchTreeNode>();
 		if (this.type == "dfs" || this.type == "dls")
-			stack = new Stack<State>();
+			stack = new Stack<SearchTreeNode>();
 		if (this.type == "bfs")
-			queue = new LinkedList<State>();
+			queue = new LinkedList<SearchTreeNode>();
 
 	}
 
@@ -37,7 +37,7 @@ public class SearchList {
 		return true;
 	}
 
-	public State remove() {
+	public SearchTreeNode remove() {
 		if (this.type == "ucs")
 			return priorityQueue.poll();
 		if (this.type == "dfs" || this.type == "dls")
@@ -48,24 +48,24 @@ public class SearchList {
 		return null;
 	}
 
-	public void bfs(ArrayList<State> expandedArray) {
+	public void bfs(ArrayList<SearchTreeNode> expandedArray) {
 		// TODO Auto-generated method stub
 	       queue.addAll(expandedArray);
 	}
 
-	public void dls(ArrayList<State> expandedArray, int maxDepth) {
+	public void dls(ArrayList<SearchTreeNode> expandedArray, int maxDepth) {
 		// TODO Auto-generated method stub
 		stack.addAll(expandedArray);
 		
 
 	}
 
-	public void ucs(ArrayList<State> expandedArray) {
+	public void ucs(ArrayList<SearchTreeNode> expandedArray) {
 		// TODO Auto-generated method stub
 
 	}
 
-	public void dfs(ArrayList<State> expandedArray) {
+	public void dfs(ArrayList<SearchTreeNode> expandedArray) {
 		// TODO Auto-generated method stub
 		stack.addAll(expandedArray);
 	}
