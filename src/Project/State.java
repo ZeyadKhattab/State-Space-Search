@@ -1,8 +1,9 @@
 package Project;
 
-public class State {
+
+public class State{
 	IMF[][] grid;
-	int gridH, gridW, numberOfMembers, totalSaved, maxSaves, curSaved;
+	int gridH, gridW, numberOfMembers, totalSaved, maxSaves, currentCarry;
 	Character ethan, submarine;
 	IMF[] members;
 //	5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
@@ -35,7 +36,7 @@ public class State {
 		//Max Saves Per Once
 		String[] c = split[5].split(",");
 		maxSaves = Integer.parseInt(c[0]);
-		curSaved = 0;
+		currentCarry = 0;
 	}
 	public State(int gridH, int gridW, int numberOfMembers, Character ethan, IMF[] members) {
 		// TODO Auto-generated constructor stub
@@ -83,10 +84,10 @@ public class State {
 		return false;
 	}
 	boolean pickUp() {
-		if(grid[ethan.posX][ethan.posY] != null && curSaved != maxSaves) {
+		if(grid[ethan.posX][ethan.posY] != null && currentCarry != maxSaves) {
 			grid[ethan.posX][ethan.posY].saved = true;
 			grid[ethan.posX][ethan.posY] = null;
-			curSaved++;
+			currentCarry++;
 			return true;
 		}
 		return false;
@@ -94,8 +95,8 @@ public class State {
 	boolean leave() {
 		if(ethan.posX == submarine.posX && ethan.posY == submarine.posY)
 		{
-			totalSaved += curSaved;
-			curSaved = 0;
+			totalSaved += currentCarry;
+			currentCarry = 0;
 			return true;
 		}
 		return false;
@@ -103,11 +104,33 @@ public class State {
 	int getRemainingMembers(){
 		return numberOfMembers - totalSaved;
 	}
-	
+	void decreaseHealth() {
+		for(IMF imf : members)
+			imf.health -= 2;
+	}
 	IMF[] getMembers() { return members;}
 	IMF getMember(int index) { return members[index];}
 	
 	IMF[][] getGrid(){
 		return grid;
+	}
+	public boolean equals(State s) {
+		boolean result = true;
+		
+		for(int i = 0;i <numberOfMembers;i++ ) {
+			result = result
+					&& (s.members[i].saved == members[i].saved)
+					&& (s.members[i].posX == members[i].posX)
+					&& (s.members[i].posY == members[i].posY);
+		}
+		result = result
+				&& (s.gridW == gridW)
+				&& (s.gridH == gridH)
+				&& (s.ethan.posX == ethan.posX)
+				&& (s.ethan.posX == ethan.posX)
+				&& (s.ethan.posY == ethan.posY)
+				&& (s.submarine.posX == submarine.posX)
+				&& (s.submarine.posY == submarine.posY);
+		return result;
 	}
 }
