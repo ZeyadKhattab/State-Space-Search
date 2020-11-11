@@ -9,6 +9,10 @@ public class MissionImpossible extends SearchProblem {
 		super(initialState);
 	}
 
+	public MissionImpossible(String initialGrid) {
+		super(new State(initialGrid));
+	}
+
 	@Override
 	State stateTransition(State state, Operator operator) {
 		// TODO Auto-generated method stub
@@ -34,24 +38,25 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	static int[][] generatePositions(int n, int m, int target) {
-		int[][] ans = new int[target][2];
-		boolean[][] generateed = new boolean[n][m];
-		Random random = new Random();
-		while (target > 0) {
-			int i = random.nextInt(n), j = random.nextInt(m);
-			if (!generateed[i][j]) {
-				generateed[i][j] = true;
-				ans[target - 1][0] = i;
-				ans[target - 1][1] = j;
-				target--;
-			}
+		int[][] possible = new int[n * m][2];
+		for (int i = 0; i < n; i++)
+			for (int j = 0; j < m; j++)
+				possible[i * m + j] = new int[] { i, j };
+		// shuffling
+		for (int i = 0; i < n * m; i++) {
+			int swapWith = randomNumber(i, n * m - 1);
+			int[] tmp = possible[i];
+			possible[i] = possible[swapWith];
+			possible[swapWith] = tmp;
 		}
+		int[][] ans = new int[target][2];
+		for (int i = 0; i < target; i++)
+			ans[i] = possible[i];
 		return ans;
 	}
 
 	static String genGrid() {
-		Random random = new Random();
-		int n = random.nextInt(15) + 1, m = random.nextInt(15) + 1;
+		int n = randomNumber(5, 15), m = randomNumber(5, 15);
 		int IMFMembers = randomNumber(5, 10);
 		int[] health = new int[IMFMembers];
 		int[][] generatedPositions = generatePositions(n, m, IMFMembers + 2);
