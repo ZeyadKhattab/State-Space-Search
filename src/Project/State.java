@@ -132,5 +132,6 @@ public class State{
 				&& (s.submarine.posX == submarine.posX)
 				&& (s.submarine.posY == submarine.posY);
 		return result;
+
 	}
 }
