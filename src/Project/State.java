@@ -14,6 +14,7 @@ public class State{
 		String[] gridD = split[0].split(",");
 		gridW = Integer.parseInt(gridD[0]);
 		gridH = Integer.parseInt(gridD[1]);
+		grid = new IMF[gridH][gridW];
 		//Ethan
 		String[] ethanP = split[1].split(",");
 		ethan = new Character(Integer.parseInt(ethanP[0]), Integer.parseInt(ethanP[1]));

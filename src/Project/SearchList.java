@@ -11,11 +11,11 @@ public class SearchList {
 
 	public SearchList(String type) {
 		this.type = type;
-		if (this.type == "ucs")
+		if (this.type.equals("ucs"))
 			priorityQueue = new PriorityQueue<SearchTreeNode>();
-		if (this.type == "dfs" || this.type == "dls")
+		if (this.type.equals("dfs") || this.type.equals("dls"))
 			stack = new Stack<SearchTreeNode>();
-		if (this.type == "bfs")
+		if (this.type.equals("bfs"))
 			queue = new LinkedList<SearchTreeNode>();
 
 	}
@@ -30,10 +30,10 @@ public class SearchList {
 		if (this.type == "ucs")
 			return priorityQueue.isEmpty();
 		if (this.type == "dfs" || this.type == "dls")
-			return stack.isEmpty() ;
+			return stack.isEmpty();
 		if (this.type == "bfs")
 			return queue.isEmpty();
-		
+
 		return true;
 	}
 
@@ -50,13 +50,12 @@ public class SearchList {
 
 	public void bfs(ArrayList<SearchTreeNode> expandedArray) {
 		// TODO Auto-generated method stub
-	       queue.addAll(expandedArray);
+		queue.addAll(expandedArray);
 	}
 
 	public void dls(ArrayList<SearchTreeNode> expandedArray, int maxDepth) {
 		// TODO Auto-generated method stub
 		stack.addAll(expandedArray);
-		
 
 	}
 

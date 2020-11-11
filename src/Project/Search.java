@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public abstract class Search {
 
-	public static SearchTreeNode generalSearch(MissionImpossible problem, String type, int k) {
+	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
 		SearchList nodes = new SearchList(type);
 		nodes.add(problem);
 
@@ -18,13 +18,13 @@ public abstract class Search {
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
 
-			if (type == "bfs")
+			if (type.equals("bfs"))
 				nodes.bfs(expandedArray);
-			if (type == "dfs")
+			if (type.equals("dfs"))
 				nodes.dfs(expandedArray);
-			if (type == "ucs")
+			if (type.equals("ucs"))
 				nodes.ucs(expandedArray);
-			if (type == "dls")
+			if (type.equals("dls"))
 				nodes.dls(expandedArray, k);
 
 		}
@@ -41,27 +41,25 @@ public abstract class Search {
 		}
 	}
 
-	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, MissionImpossible problem, String type,
-			int k) {
+	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, SearchProblem problem, String type, int k) {
 		ArrayList<SearchTreeNode> newNodes = new ArrayList<>();
 		if (node.depth >= k)
 			return newNodes;
 		ArrayList<Operator> operators = problem.getOperators();
 		for (Operator operator : operators) {
-			State newState = stateTransition(node.state, operator);
-			if (!isRepeatWithAncestors(node, newState)) {
-				SearchTreeNode newNode = new SearchTreeNode(node, newState);
+			State newState = problem.stateTransition(node.state, operator);
+			if (!isRepeatedWithAncestors(node, newState)) {
+				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator);
 				newNodes.add(newNode);
 			}
 		}
 		return null;
 	}
 
-	private static Boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {
+	private static boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {
 
-		while (node.parent != null) {
-			// == still not implemented should be method called isIdentical
-			if (node.state == newState)
+		while (node != null) {
+			if (node.state.equals(newState))
 				return true;
 			node = node.parent;
 		}
