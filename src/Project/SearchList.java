@@ -4,45 +4,49 @@ import java.util.*;
 
 public class SearchList {
 
-	PriorityQueue<SearchTreeNode> priorityQueue;
+	PriorityQueue<SearchTreeNode> ucsQueue;
 	Stack<SearchTreeNode> stack;
 	Queue<SearchTreeNode> queue;
 	String type;
 
-	public SearchList(String type) {
+	public SearchList(String type,SearchProblem problem) {
 		this.type = type;
-		if (this.type.equals("ucs"))
-			priorityQueue = new PriorityQueue<SearchTreeNode>();
-		if (this.type.equals("dfs") || this.type.equals("dls"))
+		SearchTreeNode initialNode = new SearchTreeNode(null, problem.initialState, null);
+
+		if (this.type.equals("ucs")) {
+			ucsQueue = new PriorityQueue<SearchTreeNode>();
+			ucsQueue.add(initialNode);
+		}
+		if (this.type.equals("dfs") || this.type.equals("dls")) {
 			stack = new Stack<SearchTreeNode>();
-		if (this.type.equals("bfs"))
+			stack.add(initialNode);
+
+		}
+		if (this.type.equals("bfs")) {
 			queue = new LinkedList<SearchTreeNode>();
-
-	}
-
-	public void add(Object problem) {
-		// TODO Auto-generated method stub
+			queue.add(initialNode);
+		}
 
 	}
 
 	public boolean isEmpty() {
 		// TODO Auto-generated method stub
-		if (this.type == "ucs")
-			return priorityQueue.isEmpty();
-		if (this.type == "dfs" || this.type == "dls")
+		if (this.type.equals("ucs"))
+			return ucsQueue.isEmpty();
+		if (this.type.equals("dfs") || this.type.equals("dls"))
 			return stack.isEmpty();
-		if (this.type == "bfs")
+		if (this.type.equals("bfs"))
 			return queue.isEmpty();
 
 		return true;
 	}
 
 	public SearchTreeNode remove() {
-		if (this.type == "ucs")
-			return priorityQueue.poll();
-		if (this.type == "dfs" || this.type == "dls")
+		if (this.type.equals("ucs"))
+			return ucsQueue.poll();
+		if (this.type.equals("dfs") || this.type.equals("dls"))
 			return !stack.isEmpty() ? stack.pop() : null;
-		if (this.type == "bfs")
+		if (this.type.equals("bfs"))
 			return queue.poll();
 
 		return null;
