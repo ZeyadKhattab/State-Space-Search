@@ -6,16 +6,22 @@ public class SearchTreeNode {
 	SearchTreeNode parent;
 	Operator operator;
 
-	SearchTreeNode(SearchTreeNode parent, State state, Operator operator) {
-		// Cost assignment remaining
+	SearchTreeNode(SearchTreeNode parent, State state, Operator operator, SearchProblem problem) {
+		cost = problem.pathCost(this);
 		this.state = state;
 		this.parent = parent;
 		this.operator = operator;
-		depth = parent == null ? 0 : parent.depth + 1;
+		depth = parent.depth + 1;
+	}
+
+	SearchTreeNode(State initalState, SearchProblem problem) { // called to create a root node
+		state = initalState;
+		depth = 0;
+		parent = null;
+		operator = null;
+		cost = problem.pathCost(this);
 	}
 
 }
 
-class Node {
 
-}
