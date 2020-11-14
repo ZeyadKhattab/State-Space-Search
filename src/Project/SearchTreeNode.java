@@ -14,8 +14,8 @@ public class SearchTreeNode {
 		depth = parent.depth + 1;
 	}
 
-	SearchTreeNode(State initalState, SearchProblem problem) { // called to create a root node
-		state = initalState;
+	SearchTreeNode(SearchProblem problem) { // called to create a root node
+		state = problem.initialState;
 		depth = 0;
 		parent = null;
 		operator = null;
@@ -23,5 +23,3 @@ public class SearchTreeNode {
 	}
 
 }
-
-

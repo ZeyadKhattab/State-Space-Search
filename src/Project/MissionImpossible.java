@@ -118,7 +118,13 @@ public class MissionImpossible extends SearchProblem {
 	static SearchTreeNode solve(String grid, String strategy, boolean visualize) {
 		State initialState = new State(grid);
 		MissionImpossible problem = new MissionImpossible(initialState);
-		return (SearchTreeNode) Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
+		SearchTreeNode ans = null;
+		if (strategy.equals("BF") || strategy.equals("DF") || strategy.equals("UC"))
+			ans = Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
+		else if (strategy.equals("ID"))
+			ans = Search.IDSearch(problem);
+		// remaining Greedy and a star
+		return ans;
 
 	}
 

@@ -17,13 +17,13 @@ public abstract class Search {
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
 
-			if (type.equals("bfs"))
+			if (type.equals("BF"))
 				nodes.bfs(expandedArray);
-			if (type.equals("dfs"))
+			if (type.equals("DF"))
 				nodes.dfs(expandedArray);
-			if (type.equals("ucs"))
+			if (type.equals("UC"))
 				nodes.ucs(expandedArray);
-			if (type.equals("dls"))
+			if (type.equals("DL"))
 				nodes.dls(expandedArray, k);
 
 		}
@@ -31,10 +31,10 @@ public abstract class Search {
 
 	}
 
-	public static SearchTreeNode dLSearch(MissionImpossible problem) {
+	public static SearchTreeNode IDSearch(MissionImpossible problem) { // iterative deepening
 		int k = 0;
 		while (true) {
-			SearchTreeNode node = generalSearch(problem, "dls", k);
+			SearchTreeNode node = generalSearch(problem, "DL", k++);
 			if (node != null)
 				return node;
 		}
