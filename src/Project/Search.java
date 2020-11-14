@@ -48,8 +48,10 @@ public abstract class Search {
 		ArrayList<Operator> operators = problem.getOperators();
 		for (Operator operator : operators) {
 			State newState = problem.stateTransition(node.state, operator);
+			if (newState == null)
+				continue;
 			if (!isRepeatedWithAncestors(node, newState)) {
-				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator);
+				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator, problem);
 				newNodes.add(newNode);
 			}
 		}
