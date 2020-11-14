@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public abstract class Search {
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
-		SearchList nodes = new SearchList(type,problem);
+		SearchList nodes = new SearchList(type, problem);
 
 		while (!nodes.isEmpty()) {
 
@@ -54,7 +54,7 @@ public abstract class Search {
 				newNodes.add(newNode);
 			}
 		}
-		return null;
+		return newNodes;
 	}
 
 	private static boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {
