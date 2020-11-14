@@ -15,21 +15,36 @@ public class MissionImpossible extends SearchProblem {
 
 	@Override
 	State stateTransition(State state, Operator operator) {
-		// TODO Auto-generated method stub
-		return null;
+		state = state.clone();
+		boolean succeded = false;
+		if (operator.equals(Operator.DOWN))
+			succeded = state.moveDown();
+		if (operator.equals(Operator.UP))
+			succeded = state.moveUp();
+		if (operator.equals(Operator.LEFT))
+			succeded = state.moveLeft();
+		if (operator.equals(Operator.RIGHT))
+			succeded = state.moveRight();
+		if (operator.equals(Operator.PICKUP))
+			succeded = state.pickUp();
+		if (operator.equals(Operator.DROP))
+			succeded = state.leave();
+		if (succeded) {
+			state.decreaseHealth();
+			return state;
+		} else
+			return null;
 	}
 
 	@Override
 	boolean goalTest(State state) {
-		// TODO Auto-generated method stub
-		return false;
+		return state.getRemainingMembers() == 0;
 	}
 
 	@Override
 	int pathCost(SearchTreeNode node) {
-		// TODO Auto-generated method stub
-//		return node.cost;
-		return 0;
+		State state = node.state;
+		return 100 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
 	static int randomNumber(int l, int r) {
