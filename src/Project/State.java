@@ -179,4 +179,15 @@ public class State {
 		res += "C and S: " + currentCarry + " " + totalSaved + "\n";
 		return res;
 	}
+	
+	public String toHash() {
+		String res = "";
+		res+= ethan.posX+","+ethan.posY+";";
+		for(int i=0;i<members.length;i++) {
+			if(i>0) res+=",";
+			res+="("+members[i].posX+","+members[i].posY+","+members[i].health+","+members[i].saved+")";
+		}
+		res+=";"+currentCarry+","+totalSaved+","+totalDamage+";";
+		return res;
+	}
 }
