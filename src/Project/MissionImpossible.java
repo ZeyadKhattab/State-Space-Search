@@ -16,23 +16,23 @@ public class MissionImpossible extends SearchProblem {
 
 	@Override
 	State stateTransition(State state, Operator operator) {
-		state = state.clone();
+		State ans = state.clone();
 		boolean succeded = false;
 		if (operator.equals(Operator.DOWN))
-			succeded = state.moveDown();
+			succeded = ans.moveDown();
 		if (operator.equals(Operator.UP))
-			succeded = state.moveUp();
+			succeded = ans.moveUp();
 		if (operator.equals(Operator.LEFT))
-			succeded = state.moveLeft();
+			succeded = ans.moveLeft();
 		if (operator.equals(Operator.RIGHT))
-			succeded = state.moveRight();
+			succeded = ans.moveRight();
 		if (operator.equals(Operator.PICKUP))
-			succeded = state.pickUp();
+			succeded = ans.pickUp();
 		if (operator.equals(Operator.DROP))
-			succeded = state.leave();
+			succeded = ans.leave();
 		if (succeded) {
-			state.decreaseHealth();
-			return state;
+			ans.decreaseHealth();
+			return ans;
 		} else
 			return null;
 	}
