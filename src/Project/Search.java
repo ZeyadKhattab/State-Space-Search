@@ -5,8 +5,7 @@ import java.util.ArrayList;
 public abstract class Search {
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
-		SearchList nodes = new SearchList(type);
-		nodes.add(problem);
+		SearchList nodes = new SearchList(type,problem);
 
 		while (!nodes.isEmpty()) {
 
