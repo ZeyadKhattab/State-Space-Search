@@ -37,7 +37,11 @@ public class State {
 		maxSaves = Integer.parseInt(c[0]);
 		currentCarry = 0;
 	}
-
+	
+	public State() {
+		
+	}
+	
 	Character getEthan() {
 		return ethan;
 	}
@@ -150,8 +154,27 @@ public class State {
 	}
 
 	public State clone() {
-		// TODO
-		return null;
+		State newState = new State();
+		newState.grid = new IMF[gridH][gridW];
+		newState.members = new IMF[numberOfMembers];
+		newState.numberOfMembers = numberOfMembers;
+		newState.totalSaved = totalSaved;
+		newState.maxSaves = maxSaves;
+		newState.currentCarry = currentCarry;
+		newState.totalDamage = totalDamage;
+		newState.ethan = new Character(ethan.posX, ethan.posY);
+		newState.submarine = new Character(submarine.posX, submarine.posY);
+		for(int i = 0 ;i<gridH;i++) {
+			for(int j = 0;j<gridW;j++) {
+				if(grid[i][j] == null) continue;
+				IMF temp = grid[i][j];
+				newState.grid[i][j] = new IMF(temp.posX, temp.posY, temp.health);
+			}
+		}
+		for(int i=0;i<numberOfMembers;i++) {
+			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health);
+		}
+		return newState;
 
 	}
 
