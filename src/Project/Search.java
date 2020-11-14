@@ -1,19 +1,25 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.TreeSet;
 
 public abstract class Search {
 	static int expandedNodes = 0;
+	static int MILLION = (int) 1e6;
+	static TreeSet<State> allNodes;
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
 		SearchList nodes = new SearchList(type, problem);
+		allNodes = new TreeSet<>();
+		allNodes.add(problem.initialState);
 		while (!nodes.isEmpty()) {
 			SearchTreeNode node = nodes.remove();
-
 			if (problem.goalTest(node.state))
 				return node;
 
 			expandedNodes++;
+			if (expandedNodes % MILLION == 0)
+				System.out.println(expandedNodes);
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
 
@@ -46,16 +52,29 @@ public abstract class Search {
 		if (node.depth >= k)
 			return newNodes;
 		ArrayList<Operator> operators = problem.getOperators();
+		boolean succeded = false;
 		for (Operator operator : operators) {
+//			 if (operator.equals(Operator.DOWN) && succeded)
+//			 break;
 			State newState = problem.stateTransition(node.state, operator);
 			if (newState == null)
 				continue;
-			if (!isRepeatedWithAncestors(node, newState)) {
+			succeded = true;
+			if (!isRepeated(newState)) {
 				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator, problem);
 				newNodes.add(newNode);
+				 allNodes.add(newState);
 			}
 		}
 		return newNodes;
+	}
+
+	private static boolean isRepeated(State newState) {
+//		for (State other : allNodes)
+//			if (other.equals(newState))
+//				return true;
+//		return false;
+		return allNodes.contains(newState);
 	}
 
 	private static boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {

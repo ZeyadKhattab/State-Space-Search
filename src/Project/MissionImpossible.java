@@ -187,12 +187,12 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 	ArrayList<Operator> getOperators() {
 		ArrayList<Operator> ans = new ArrayList<>();
+		ans.add(Operator.DROP);
+		ans.add(Operator.PICKUP);
 		ans.add(Operator.DOWN);
 		ans.add(Operator.UP);
 		ans.add(Operator.LEFT);
 		ans.add(Operator.RIGHT);
-		ans.add(Operator.PICKUP);
-		ans.add(Operator.DROP);
 		return ans;
 
 	}
