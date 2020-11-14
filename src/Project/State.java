@@ -164,22 +164,30 @@ public class State {
 		newState.totalDamage = totalDamage;
 		newState.ethan = new Character(ethan.posX, ethan.posY);
 		newState.submarine = new Character(submarine.posX, submarine.posY);
-		for(int i = 0 ;i<gridH;i++) {
-			for(int j = 0;j<gridW;j++) {
-				if(grid[i][j] == null) continue;
-				IMF temp = grid[i][j];
-				newState.grid[i][j] = new IMF(temp.posX, temp.posY, temp.health);
-			}
-		}
+//		for(int i = 0 ;i<gridH;i++) {
+//			for(int j = 0;j<gridW;j++) {
+//				if(grid[i][j] == null) continue;
+//				IMF temp = grid[i][j];
+//				newState.grid[i][j] = new IMF(temp.posX, temp.posY, temp.health);
+//			}
+//		}
 		for(int i=0;i<numberOfMembers;i++) {
 			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health);
+			newState.grid[members[i].posX][members[i].posY] = newState.members[i];
 		}
 		return newState;
 
 	}
 
 	public String toString() {
-		// TODO
-		return null;
+		String res = "";
+		for(int i = 0 ;i<gridH;i++) {
+			for(int j = 0;j<gridW;j++) {
+				if(grid[i][j] == null) res+=("NULL |");
+				else res+=("("+grid[i][j].health+")|");
+			}
+			res+="\n";
+		}
+		return res;
 	}
 }
