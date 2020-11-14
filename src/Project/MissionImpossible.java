@@ -129,6 +129,7 @@ public class MissionImpossible extends SearchProblem {
 			for (SearchTreeNode node : pathToGoal)
 				System.out.println(node.state + "-----------------\n");
 		}
+		Search.expandedNodes=0;
 		return getSolutionAsString(pathToGoal, ans);
 
 	}
@@ -149,6 +150,7 @@ public class MissionImpossible extends SearchProblem {
 			sb.append(members[i].health);
 		}
 		sb.append(";");
+		sb.append(Search.expandedNodes);
 		return sb.toString();
 	}
 

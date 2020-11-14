@@ -3,16 +3,18 @@ package Project;
 import java.util.ArrayList;
 
 public abstract class Search {
+	static int expandedNodes=0;
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
 		SearchList nodes = new SearchList(type, problem);
 
 		while (!nodes.isEmpty()) {
-
 			SearchTreeNode node = nodes.remove();
 
 			if (problem.goalTest(node.state))
 				return node;
+			
+			expandedNodes++;
 
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
