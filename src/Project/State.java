@@ -185,8 +185,11 @@ public class State {
 		String res = "";
 		for(int i = 0 ;i<gridH;i++) {
 			for(int j = 0;j<gridW;j++) {
-				if(grid[i][j] == null) res+=("NULL |");
-				else res+=("("+grid[i][j].health+")|");
+				if(ethan.posX == i && ethan.posY == j) res+="ETHAN";
+				if(submarine.posX == i && submarine.posY == j) res+="SUBM";
+				if(grid[i][j] == null) res+=("NULL ");
+				else res+=("("+grid[i][j].health+")");
+				res+="|";
 			}
 			res+="\n";
 		}
