@@ -8,7 +8,6 @@ public class State {
 
 //	5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
 	public State(String state) {
-		// TODO Auto-generated constructor stub
 		String[] split = state.split(";");
 		// Grid Dimensions
 		String[] gridD = split[0].split(",");

@@ -129,19 +129,13 @@ public class MissionImpossible extends SearchProblem {
 			for (SearchTreeNode node : pathToGoal)
 				System.out.println(node.state + "-----------------\n");
 		}
-		return getSolutionAsString(ans);
+		return getSolutionAsString(pathToGoal, ans);
 
 	}
 
 	// missing # nodes expanded
-	public static String getSolutionAsString(SearchTreeNode goalNode) {
+	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
-		ArrayList<SearchTreeNode> pathToGoal = getPathToGoal(goalNode);
-		for (int i = 0; i < pathToGoal.size(); i++) {
-			if (i > 0)
-				sb.append(",");
-			sb.append(operatorToString(pathToGoal.get(i).operator));
-		}
 		sb.append(";" + goalNode.state.getNumberOfDeaths() + ";");
 		IMF[] members = goalNode.state.getMembers();
 		for (int i = 0; i < members.length; i++) {
