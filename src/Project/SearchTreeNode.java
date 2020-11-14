@@ -7,11 +7,11 @@ public class SearchTreeNode {
 	Operator operator;
 
 	SearchTreeNode(SearchTreeNode parent, State state, Operator operator, SearchProblem problem) {
-		cost = problem.pathCost(this);
 		this.state = state;
 		this.parent = parent;
 		this.operator = operator;
 		depth = parent.depth + 1;
+		cost = problem.pathCost(this);
 	}
 
 	SearchTreeNode(SearchProblem problem) { // called to create a root node

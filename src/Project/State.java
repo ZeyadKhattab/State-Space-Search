@@ -155,6 +155,8 @@ public class State {
 
 	public State clone() {
 		State newState = new State();
+		newState.gridH = gridH;
+		newState.gridW = gridW;
 		newState.grid = new IMF[gridH][gridW];
 		newState.members = new IMF[numberOfMembers];
 		newState.numberOfMembers = numberOfMembers;
