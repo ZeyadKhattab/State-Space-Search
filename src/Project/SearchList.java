@@ -14,7 +14,7 @@ public class SearchList {
 		SearchTreeNode initialNode = new SearchTreeNode(problem);
 
 		if (this.type.equals("UC")) {
-			ucsQueue = new PriorityQueue<SearchTreeNode>();
+			ucsQueue = new PriorityQueue<SearchTreeNode>((node1, node2) -> node1.cost - node2.cost);
 			ucsQueue.add(initialNode);
 		}
 		if (this.type.equals("DF") || this.type.equals("DL")) {
@@ -61,7 +61,7 @@ public class SearchList {
 	}
 
 	public void ucs(ArrayList<SearchTreeNode> expandedArray) {
-		// TODO Auto-generated method stub
+		ucsQueue.addAll(expandedArray);
 
 	}
 
