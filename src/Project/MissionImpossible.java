@@ -18,6 +18,8 @@ public class MissionImpossible extends SearchProblem {
 	State stateTransition(State state, Operator operator) {
 		State ans = state.clone();
 		boolean succeded = false;
+		if (operator.equals(Operator.PICKUP))
+			succeded = ans.pickUp();
 		if (operator.equals(Operator.DOWN))
 			succeded = ans.moveDown();
 		if (operator.equals(Operator.UP))
@@ -26,8 +28,6 @@ public class MissionImpossible extends SearchProblem {
 			succeded = ans.moveLeft();
 		if (operator.equals(Operator.RIGHT))
 			succeded = ans.moveRight();
-		if (operator.equals(Operator.PICKUP))
-			succeded = ans.pickUp();
 		if (operator.equals(Operator.DROP))
 			succeded = ans.leave();
 		if (succeded) {
@@ -129,7 +129,7 @@ public class MissionImpossible extends SearchProblem {
 			for (SearchTreeNode node : pathToGoal)
 				System.out.println(node.state + "-----------------\n");
 		}
-		Search.expandedNodes=0;
+		Search.expandedNodes = 0;
 		return getSolutionAsString(pathToGoal, ans);
 
 	}
@@ -137,8 +137,8 @@ public class MissionImpossible extends SearchProblem {
 	// missing # nodes expanded
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < pathToGoal.size(); i++) {
-			if (i > 0)
+		for (int i = 1; i < pathToGoal.size(); i++) {
+			if (i > 1)
 				sb.append(",");
 			sb.append(operatorToString(pathToGoal.get(i).operator));
 		}

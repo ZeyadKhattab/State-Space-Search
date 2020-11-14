@@ -6,7 +6,7 @@ public class State {
 	Character ethan, submarine;
 	IMF[] members;
 
-//	5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
+	// 5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
 	public State(String state) {
 		String[] split = state.split(";");
 		// Grid Dimensions
@@ -37,11 +37,11 @@ public class State {
 		maxSaves = Integer.parseInt(c[0]);
 		currentCarry = 0;
 	}
-	
+
 	public State() {
-		
+
 	}
-	
+
 	Character getEthan() {
 		return ethan;
 	}
@@ -126,21 +126,15 @@ public class State {
 
 	public boolean equals(State s) {
 		boolean result = true;
-		
-		for(int i = 0;i <numberOfMembers;i++ ) {
-			result = result
-					&& (s.members[i].saved == members[i].saved)
-					&& (s.members[i].posX == members[i].posX)
-					&& (s.members[i].posY == members[i].posY);
+
+		for (int i = 0; i < numberOfMembers; i++) {
+			result = result && (s.members[i].saved == members[i].saved) && (s.members[i].posX == members[i].posX)
+					&& (s.members[i].posY == members[i].posY && s.members[i].health == members[i].health);
 		}
-		result = result
-				&& (s.gridW == gridW)
-				&& (s.gridH == gridH)
-				&& (s.ethan.posX == ethan.posX)
-				&& (s.ethan.posX == ethan.posX)
-				&& (s.ethan.posY == ethan.posY)
-				&& (s.submarine.posX == submarine.posX)
+		result = result && (s.gridW == gridW) && (s.gridH == gridH) && (s.ethan.posX == ethan.posX)
+				&& (s.ethan.posX == ethan.posX) && (s.ethan.posY == ethan.posY) && (s.submarine.posX == submarine.posX)
 				&& (s.submarine.posY == submarine.posY);
+		result = result && currentCarry == s.currentCarry && totalDamage == s.totalDamage && totalSaved == s.totalSaved;
 		return result;
 
 	}
@@ -166,16 +160,11 @@ public class State {
 		newState.totalDamage = totalDamage;
 		newState.ethan = new Character(ethan.posX, ethan.posY);
 		newState.submarine = new Character(submarine.posX, submarine.posY);
-//		for(int i = 0 ;i<gridH;i++) {
-//			for(int j = 0;j<gridW;j++) {
-//				if(grid[i][j] == null) continue;
-//				IMF temp = grid[i][j];
-//				newState.grid[i][j] = new IMF(temp.posX, temp.posY, temp.health);
-//			}
-//		}
-		for(int i=0;i<numberOfMembers;i++) {
-			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health);
-			newState.grid[members[i].posX][members[i].posY] = newState.members[i];
+
+		for (int i = 0; i < numberOfMembers; i++) {
+			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health, members[i].saved);
+			if (!members[i].saved)
+				newState.grid[members[i].posX][members[i].posY] = newState.members[i];
 		}
 		return newState;
 
@@ -183,16 +172,21 @@ public class State {
 
 	public String toString() {
 		String res = "";
-		for(int i = 0 ;i<gridH;i++) {
-			for(int j = 0;j<gridW;j++) {
-				if(ethan.posX == i && ethan.posY == j) res+="ETHAN";
-				if(submarine.posX == i && submarine.posY == j) res+="SUBM";
-				if(grid[i][j] == null) res+=("NULL ");
-				else res+=("("+grid[i][j].health+")");
-				res+="|";
+		for (int i = 0; i < gridH; i++) {
+			for (int j = 0; j < gridW; j++) {
+				if (ethan.posX == i && ethan.posY == j)
+					res += "ETHAN";
+				if (submarine.posX == i && submarine.posY == j)
+					res += "SUBM";
+				if (grid[i][j] == null)
+					res += ("NULL ");
+				else
+					res += ("(" + grid[i][j].health + ")");
+				res += "|";
 			}
-			res+="\n";
+			res += "\n";
 		}
+		res += "C and S: " + currentCarry + " " + totalSaved + "\n";
 		return res;
 	}
 }

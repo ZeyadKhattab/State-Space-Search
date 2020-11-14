@@ -3,24 +3,23 @@ package Project;
 import java.util.ArrayList;
 
 public abstract class Search {
-	static int expandedNodes=0;
+	static int expandedNodes = 0;
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
 		SearchList nodes = new SearchList(type, problem);
-
 		while (!nodes.isEmpty()) {
 			SearchTreeNode node = nodes.remove();
 
 			if (problem.goalTest(node.state))
 				return node;
-			
-			expandedNodes++;
 
+			expandedNodes++;
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
 
 			if (type.equals("BF"))
 				nodes.bfs(expandedArray);
+
 			if (type.equals("DF"))
 				nodes.dfs(expandedArray);
 			if (type.equals("UC"))
@@ -60,11 +59,11 @@ public abstract class Search {
 	}
 
 	private static boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {
-
-		while (node != null) {
-			if (node.state.equals(newState))
+		SearchTreeNode curr = node;
+		while (curr != null) {
+			if (curr.state.equals(newState))
 				return true;
-			node = node.parent;
+			curr = curr.parent;
 		}
 		return false;
 	}
