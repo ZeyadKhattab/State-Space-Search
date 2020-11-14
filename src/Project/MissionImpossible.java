@@ -136,6 +136,11 @@ public class MissionImpossible extends SearchProblem {
 	// missing # nodes expanded
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < pathToGoal.size(); i++) {
+			if (i > 0)
+				sb.append(",");
+			sb.append(operatorToString(pathToGoal.get(i).operator));
+		}
 		sb.append(";" + goalNode.state.getNumberOfDeaths() + ";");
 		IMF[] members = goalNode.state.getMembers();
 		for (int i = 0; i < members.length; i++) {
