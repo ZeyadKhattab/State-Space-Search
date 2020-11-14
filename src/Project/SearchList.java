@@ -9,9 +9,9 @@ public class SearchList {
 	Queue<SearchTreeNode> queue;
 	String type;
 
-	public SearchList(String type,SearchProblem problem) {
+	public SearchList(String type, SearchProblem problem) {
 		this.type = type;
-		SearchTreeNode initialNode = new SearchTreeNode(null, problem.initialState, null);
+		SearchTreeNode initialNode = new SearchTreeNode(problem.initialState, problem);
 
 		if (this.type.equals("ucs")) {
 			ucsQueue = new PriorityQueue<SearchTreeNode>();
