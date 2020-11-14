@@ -2,6 +2,7 @@ package Project;
 
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.Stack;
 
 public class MissionImpossible extends SearchProblem {
 
@@ -115,17 +116,71 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-	static SearchTreeNode solve(String grid, String strategy, boolean visualize) {
-		State initialState = new State(grid);
-		MissionImpossible problem = new MissionImpossible(initialState);
+	// remaining Greedy and a star
+	static String solve(String grid, String strategy, boolean visualize) {
+		MissionImpossible problem = new MissionImpossible(grid);
 		SearchTreeNode ans = null;
 		if (strategy.equals("BF") || strategy.equals("DF") || strategy.equals("UC"))
 			ans = Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
 		else if (strategy.equals("ID"))
 			ans = Search.IDSearch(problem);
-		// remaining Greedy and a star
-		return ans;
+		ArrayList<SearchTreeNode> pathToGoal = getPathToGoal(ans);
+		if (visualize) {
+			for (SearchTreeNode node : pathToGoal)
+				System.out.println(node.state + "-----------------\n");
+		}
+		return getSolutionAsString(ans);
 
+	}
+
+	// missing # nodes expanded
+	public static String getSolutionAsString(SearchTreeNode goalNode) {
+		StringBuilder sb = new StringBuilder();
+		ArrayList<SearchTreeNode> pathToGoal = getPathToGoal(goalNode);
+		for (int i = 0; i < pathToGoal.size(); i++) {
+			if (i > 0)
+				sb.append(",");
+			sb.append(operatorToString(pathToGoal.get(i).operator));
+		}
+		sb.append(";" + goalNode.state.getNumberOfDeaths() + ";");
+		IMF[] members = goalNode.state.getMembers();
+		for (int i = 0; i < members.length; i++) {
+			if (i > 0)
+				sb.append(",");
+			sb.append(members[i].health);
+		}
+		sb.append(";");
+		return sb.toString();
+	}
+
+	public static ArrayList<SearchTreeNode> getPathToGoal(SearchTreeNode goalNode) {
+		Stack<SearchTreeNode> stack = new Stack();
+		SearchTreeNode node = goalNode;
+		while (node != null) {
+			stack.add(node);
+			node = node.parent;
+		}
+		ArrayList<SearchTreeNode> ans = new ArrayList<>();
+		while (!stack.isEmpty())
+			ans.add(stack.pop());
+		return ans;
+	}
+
+	public static String operatorToString(Operator operator) {
+
+		if (operator.equals(Operator.DOWN))
+			return "down";
+		if (operator.equals(Operator.UP))
+			return "up";
+		if (operator.equals(Operator.LEFT))
+			return "left";
+		if (operator.equals(Operator.RIGHT))
+			return "right";
+		if (operator.equals(Operator.PICKUP))
+			return "carry";
+		if (operator.equals(Operator.DROP))
+			return "drop";
+		return null;
 	}
 
 	@Override
