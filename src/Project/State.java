@@ -166,19 +166,23 @@ public class State implements Comparable<State> {
 		String res = "";
 		for (int i = 0; i < gridH; i++) {
 			for (int j = 0; j < gridW; j++) {
+				String cell = "";
 				if (ethan.posX == i && ethan.posY == j)
-					res += "ETHAN";
+					cell += "ETHAN ";
 				if (submarine.posX == i && submarine.posY == j)
-					res += "SUBM";
-				// if (grid[i][j] == null)
-				// res += ("NULL ");
-				// else
-				// res += ("(" + grid[i][j].health + ")");
-				res += "|";
+					cell += "SUBM ";
+				String mem = "NULL ";
+				for(IMF m : members)
+					if(m.posX == i && m.posY ==j)
+						mem = "(" + m.health + ")";
+				cell += mem;
+				while(cell.length()<16)
+					cell+=" ";
+				res+=cell+"|";
 			}
 			res += "\n";
 		}
-		res += "C and S: " + currentCarry + " " + totalSaved + "\n";
+		res += "Current Carry: "+  currentCarry  +", Total Saved: " + totalSaved +", Total Damage: " + totalDamage + "\n";
 		return res;
 	}
 
