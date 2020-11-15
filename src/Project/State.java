@@ -108,8 +108,8 @@ public class State implements Comparable<State> {
 		for (IMF imf : members) {
 			if (imf.saved)
 				continue;
-			int decrease = Math.min(2, imf.health);
-			imf.health -= decrease;
+			int decrease = Math.min(2, 100 - imf.health);
+			imf.health += decrease;
 			totalDamage += decrease;
 		}
 	}
@@ -138,7 +138,7 @@ public class State implements Comparable<State> {
 	public int getNumberOfDeaths() {
 		int ans = 0;
 		for (IMF member : members)
-			if (member.health == 0)
+			if (member.health == 100)
 				ans++;
 		return ans;
 	}
@@ -166,19 +166,23 @@ public class State implements Comparable<State> {
 		String res = "";
 		for (int i = 0; i < gridH; i++) {
 			for (int j = 0; j < gridW; j++) {
+				String cell = "";
 				if (ethan.posX == i && ethan.posY == j)
-					res += "ETHAN";
+					cell += "ETHAN ";
 				if (submarine.posX == i && submarine.posY == j)
-					res += "SUBM";
-				// if (grid[i][j] == null)
-				// res += ("NULL ");
-				// else
-				// res += ("(" + grid[i][j].health + ")");
-				res += "|";
+					cell += "SUBM ";
+				String mem = "NULL ";
+				for(IMF m : members)
+					if(m.posX == i && m.posY ==j && !m.saved)
+						mem = "(" + m.health + ")";
+				cell += mem;
+				while(cell.length()<16)
+					cell+=" ";
+				res+=cell+"|";
 			}
 			res += "\n";
 		}
-		res += "C and S: " + currentCarry + " " + totalSaved + "\n";
+		res += "Current Carry: "+  currentCarry  +", Total Saved: " + totalSaved +", Total Damage: " + totalDamage + "\n";
 		return res;
 	}
 
