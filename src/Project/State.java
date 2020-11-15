@@ -108,8 +108,8 @@ public class State implements Comparable<State> {
 		for (IMF imf : members) {
 			if (imf.saved)
 				continue;
-			int decrease = Math.min(2, imf.health);
-			imf.health -= decrease;
+			int decrease = Math.min(2, 100 - imf.health);
+			imf.health += decrease;
 			totalDamage += decrease;
 		}
 	}
@@ -138,7 +138,7 @@ public class State implements Comparable<State> {
 	public int getNumberOfDeaths() {
 		int ans = 0;
 		for (IMF member : members)
-			if (member.health == 0)
+			if (member.health == 100)
 				ans++;
 		return ans;
 	}
@@ -173,7 +173,7 @@ public class State implements Comparable<State> {
 					cell += "SUBM ";
 				String mem = "NULL ";
 				for(IMF m : members)
-					if(m.posX == i && m.posY ==j)
+					if(m.posX == i && m.posY ==j && !m.saved)
 						mem = "(" + m.health + ")";
 				cell += mem;
 				while(cell.length()<16)
