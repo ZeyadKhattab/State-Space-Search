@@ -1,6 +1,6 @@
 package Project;
 
-public class State implements Comparable<State> {
+public class MissionImpossibleState implements Comparable<MissionImpossibleState> {
 	static int gridH, gridW, numberOfMembers, maxSaves;
 	Character ethan;
 	static Character submarine;
@@ -8,7 +8,7 @@ public class State implements Comparable<State> {
 	int currentCarry, totalSaved, totalDamage;
 
 	// 5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
-	public State(String state) {
+	public MissionImpossibleState(String state) {
 		String[] split = state.split(";");
 		// Grid Dimensions
 		String[] gridD = split[0].split(",");
@@ -37,7 +37,7 @@ public class State implements Comparable<State> {
 		currentCarry = 0;
 	}
 
-	public State() {
+	public MissionImpossibleState() {
 
 	}
 
@@ -122,7 +122,7 @@ public class State implements Comparable<State> {
 		return members[index];
 	}
 
-	public boolean equals(State s) {
+	public boolean equals(MissionImpossibleState s) {
 		boolean result = true;
 
 		for (int i = 0; i < numberOfMembers; i++) {
@@ -143,8 +143,8 @@ public class State implements Comparable<State> {
 		return ans;
 	}
 
-	public State clone() {
-		State newState = new State();
+	public MissionImpossibleState clone() {
+		MissionImpossibleState newState = new MissionImpossibleState();
 
 		newState.members = new IMF[numberOfMembers];
 
@@ -187,7 +187,7 @@ public class State implements Comparable<State> {
 	}
 
 	@Override
-	public int compareTo(State s) {
+	public int compareTo(MissionImpossibleState s) {
 		if (ethan.posX != s.ethan.posX)
 			return Integer.compare(ethan.posX, s.ethan.posX);
 		if (ethan.posY != s.ethan.posY)

@@ -6,17 +6,17 @@ import java.util.Stack;
 
 public class MissionImpossible extends SearchProblem {
 
-	public MissionImpossible(State initialState) {
+	public MissionImpossible(MissionImpossibleState initialState) {
 		super(initialState);
 	}
 
 	public MissionImpossible(String initialGrid) {
-		super(new State(initialGrid));
+		super(new MissionImpossibleState(initialGrid));
 	}
 
 	@Override
-	State stateTransition(State state, Operator operator) {
-		State ans = state.clone();
+	MissionImpossibleState stateTransition(MissionImpossibleState state, Operator operator) {
+		MissionImpossibleState ans = state.clone();
 		boolean succeded = false;
 		if (operator.equals(Operator.PICKUP))
 			succeded = ans.pickUp();
@@ -38,13 +38,13 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	@Override
-	boolean goalTest(State state) {
+	boolean goalTest(MissionImpossibleState state) {
 		return state.getRemainingMembers() == 0;
 	}
 
 	@Override
 	int pathCost(SearchTreeNode node) {
-		State state = node.state;
+		MissionImpossibleState state = node.state;
 		return 2000 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
@@ -202,7 +202,7 @@ public class MissionImpossible extends SearchProblem {
 		return Math.abs(a.posX - b.posX) + Math.abs(a.posY - b.posY);
 	}
 
-	public int heuristic(State state, int id) {
+	public int heuristic(MissionImpossibleState state, int id) {
 		int ans = 0;
 		for (IMF member : state.members) {
 			if (!member.saved) {
