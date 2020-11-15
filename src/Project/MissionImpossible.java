@@ -15,8 +15,8 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	@Override
-	MissionImpossibleState stateTransition(MissionImpossibleState state, Operator operator) {
-		MissionImpossibleState ans = state.clone();
+	MissionImpossibleState stateTransition(State state, Operator operator) {
+		MissionImpossibleState ans = cast(state).clone();
 		boolean succeded = false;
 		if (operator.equals(Operator.PICKUP))
 			succeded = ans.pickUp();
@@ -37,14 +37,18 @@ public class MissionImpossible extends SearchProblem {
 			return null;
 	}
 
+	static MissionImpossibleState cast(State state) {
+		return (MissionImpossibleState) state;
+	}
+
 	@Override
-	boolean goalTest(MissionImpossibleState state) {
-		return state.getRemainingMembers() == 0;
+	boolean goalTest(State state) {
+		return cast(state).getRemainingMembers() == 0;
 	}
 
 	@Override
 	int pathCost(SearchTreeNode node) {
-		MissionImpossibleState state = node.state;
+		MissionImpossibleState state = cast(node.state);
 		return 2000 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
@@ -135,7 +139,7 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-	// missing # nodes expanded
+	
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < pathToGoal.size(); i++) {
@@ -143,8 +147,8 @@ public class MissionImpossible extends SearchProblem {
 				sb.append(",");
 			sb.append(operatorToString(pathToGoal.get(i).operator));
 		}
-		sb.append(";" + goalNode.state.getNumberOfDeaths() + ";");
-		IMF[] members = goalNode.state.getMembers();
+		sb.append(";" + cast(goalNode.state).getNumberOfDeaths() + ";");
+		IMF[] members = cast(goalNode.state).getMembers();
 		for (int i = 0; i < members.length; i++) {
 			if (i > 0)
 				sb.append(",");
@@ -202,11 +206,12 @@ public class MissionImpossible extends SearchProblem {
 		return Math.abs(a.posX - b.posX) + Math.abs(a.posY - b.posY);
 	}
 
-	public int heuristic(MissionImpossibleState state, int id) {
+	@Override
+	public int heuristic(State state, int id) {
 		int ans = 0;
-		for (IMF member : state.members) {
+		for (IMF member : cast(state).members) {
 			if (!member.saved) {
-				int distance = distance(state.ethan, member);
+				int distance = distance(cast(state).ethan, member);
 				if (2 * distance + member.health >= 100)
 					ans += (member.health == 100 ? 0 : 2000) + 100 - member.health;
 				else

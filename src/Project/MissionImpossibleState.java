@@ -1,6 +1,6 @@
 package Project;
 
-public class MissionImpossibleState implements Comparable<MissionImpossibleState> {
+public class MissionImpossibleState extends State {
 	static int gridH, gridW, numberOfMembers, maxSaves;
 	Character ethan;
 	static Character submarine;
@@ -122,7 +122,9 @@ public class MissionImpossibleState implements Comparable<MissionImpossibleState
 		return members[index];
 	}
 
-	public boolean equals(MissionImpossibleState s) {
+	@Override
+	public boolean equals(State other) {
+		MissionImpossibleState s = MissionImpossible.cast(other);
 		boolean result = true;
 
 		for (int i = 0; i < numberOfMembers; i++) {
@@ -143,6 +145,7 @@ public class MissionImpossibleState implements Comparable<MissionImpossibleState
 		return ans;
 	}
 
+	@Override
 	public MissionImpossibleState clone() {
 		MissionImpossibleState newState = new MissionImpossibleState();
 
@@ -162,6 +165,7 @@ public class MissionImpossibleState implements Comparable<MissionImpossibleState
 
 	}
 
+	@Override
 	public String toString() {
 		String res = "";
 		for (int i = 0; i < gridH; i++) {
@@ -172,22 +176,24 @@ public class MissionImpossibleState implements Comparable<MissionImpossibleState
 				if (submarine.posX == i && submarine.posY == j)
 					cell += "SUBM ";
 				String mem = "NULL ";
-				for(IMF m : members)
-					if(m.posX == i && m.posY ==j && !m.saved)
+				for (IMF m : members)
+					if (m.posX == i && m.posY == j && !m.saved)
 						mem = "(" + m.health + ")";
 				cell += mem;
-				while(cell.length()<16)
-					cell+=" ";
-				res+=cell+"|";
+				while (cell.length() < 16)
+					cell += " ";
+				res += cell + "|";
 			}
 			res += "\n";
 		}
-		res += "Current Carry: "+  currentCarry  +", Total Saved: " + totalSaved +", Total Damage: " + totalDamage + "\n";
+		res += "Current Carry: " + currentCarry + ", Total Saved: " + totalSaved + ", Total Damage: " + totalDamage
+				+ "\n";
 		return res;
 	}
 
 	@Override
-	public int compareTo(MissionImpossibleState s) {
+	public int compareTo(State other) {
+		MissionImpossibleState s = (MissionImpossibleState) other;
 		if (ethan.posX != s.ethan.posX)
 			return Integer.compare(ethan.posX, s.ethan.posX);
 		if (ethan.posY != s.ethan.posY)
@@ -205,6 +211,6 @@ public class MissionImpossibleState implements Comparable<MissionImpossibleState
 				return Integer.compare(members[i].health, s.members[i].health);
 		}
 		return 0;
-
 	}
+
 }

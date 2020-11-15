@@ -38,7 +38,7 @@ public abstract class Search {
 
 	}
 
-	public static SearchTreeNode IDSearch(MissionImpossible problem) { // iterative deepening
+	public static SearchTreeNode IDSearch(SearchProblem problem) { // iterative deepening
 		int maxDepth = 0;
 		while (true) {
 			SearchTreeNode node = generalSearch(problem, "DL", maxDepth++);
