@@ -30,7 +30,7 @@ public abstract class Search {
 				nodes.ucs(expandedArray);
 			if (type.equals("DL"))
 				nodes.dls(expandedArray, maxDepth);
-			if(type.equals("AS1") || type.equals("AS2"))
+			if (type.equals("AS1") || type.equals("AS2"))
 				nodes.aStar(expandedArray);
 
 		}

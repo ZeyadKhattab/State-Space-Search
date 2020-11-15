@@ -17,18 +17,19 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 	MissionImpossibleState stateTransition(State state, Operator operator) {
 		MissionImpossibleState ans = cast(state).clone();
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
 		boolean succeded = false;
-		if (operator.equals(Operator.PICKUP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
 			succeded = ans.pickUp();
-		if (operator.equals(Operator.DOWN))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
 			succeded = ans.moveDown();
-		if (operator.equals(Operator.UP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
 			succeded = ans.moveUp();
-		if (operator.equals(Operator.LEFT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
 			succeded = ans.moveLeft();
-		if (operator.equals(Operator.RIGHT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
 			succeded = ans.moveRight();
-		if (operator.equals(Operator.DROP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
 			succeded = ans.leave();
 		if (succeded) {
 			ans.decreaseHealth();
@@ -139,7 +140,6 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-	
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < pathToGoal.size(); i++) {
@@ -173,18 +173,18 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	public static String operatorToString(Operator operator) {
-
-		if (operator.equals(Operator.DOWN))
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
 			return "down";
-		if (operator.equals(Operator.UP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
 			return "up";
-		if (operator.equals(Operator.LEFT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
 			return "left";
-		if (operator.equals(Operator.RIGHT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
 			return "right";
-		if (operator.equals(Operator.PICKUP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
 			return "carry";
-		if (operator.equals(Operator.DROP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
 			return "drop";
 		return null;
 	}
@@ -192,12 +192,12 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 	ArrayList<Operator> getOperators() {
 		ArrayList<Operator> ans = new ArrayList<>();
-		ans.add(Operator.DROP);
-		ans.add(Operator.PICKUP);
-		ans.add(Operator.DOWN);
-		ans.add(Operator.UP);
-		ans.add(Operator.LEFT);
-		ans.add(Operator.RIGHT);
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.RIGHT));
 		return ans;
 
 	}
