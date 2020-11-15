@@ -5,7 +5,6 @@ import java.util.TreeSet;
 
 public abstract class Search {
 	static int expandedNodes = 0;
-	static int MILLION = (int) 1e6;
 	static TreeSet<State> allNodes;
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int maxDepth) {
@@ -18,8 +17,7 @@ public abstract class Search {
 				return node;
 
 			expandedNodes++;
-			if (expandedNodes % MILLION == 0)
-				System.out.println(expandedNodes);
+
 			// getting all the possible states that can be reached from that node
 			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, maxDepth);
 
@@ -32,6 +30,8 @@ public abstract class Search {
 				nodes.ucs(expandedArray);
 			if (type.equals("DL"))
 				nodes.dls(expandedArray, maxDepth);
+			if(type.equals("AS1") || type.equals("AS2"))
+				nodes.aStar(expandedArray);
 
 		}
 		return null;
@@ -47,7 +47,8 @@ public abstract class Search {
 		}
 	}
 
-	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, SearchProblem problem, String type, int maxDepth) {
+	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, SearchProblem problem, String type,
+			int maxDepth) {
 		ArrayList<SearchTreeNode> newNodes = new ArrayList<>();
 		if (node.depth >= maxDepth)
 			return newNodes;
@@ -59,7 +60,7 @@ public abstract class Search {
 			if (!isRepeated(newState)) {
 				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator, problem);
 				newNodes.add(newNode);
-				 allNodes.add(newState);
+				allNodes.add(newState);
 			}
 		}
 		return newNodes;

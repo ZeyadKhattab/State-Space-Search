@@ -45,7 +45,7 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 	int pathCost(SearchTreeNode node) {
 		State state = node.state;
-		return 100 * state.getNumberOfDeaths() + state.totalDamage;
+		return 2000 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
 	static int randomNumber(int l, int r) {
@@ -120,7 +120,9 @@ public class MissionImpossible extends SearchProblem {
 	static String solve(String grid, String strategy, boolean visualize) {
 		MissionImpossible problem = new MissionImpossible(grid);
 		SearchTreeNode ans = null;
-		if (strategy.equals("BF") || strategy.equals("DF") || strategy.equals("UC"))
+		Search.expandedNodes = 0;
+		if (strategy.equals("BF") || strategy.equals("DF") || strategy.equals("UC") || strategy.equals("AS1")
+				|| strategy.equals("AS2"))
 			ans = Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
 		else if (strategy.equals("ID"))
 			ans = Search.IDSearch(problem);
@@ -129,7 +131,6 @@ public class MissionImpossible extends SearchProblem {
 			for (SearchTreeNode node : pathToGoal)
 				System.out.println(node.state + "-----------------\n");
 		}
-		Search.expandedNodes = 0;
 		return getSolutionAsString(pathToGoal, ans);
 
 	}
@@ -195,6 +196,24 @@ public class MissionImpossible extends SearchProblem {
 		ans.add(Operator.RIGHT);
 		return ans;
 
+	}
+
+	static int distance(Character a, Character b) {
+		return Math.abs(a.posX - b.posX) + Math.abs(a.posY - b.posY);
+	}
+
+	public int heuristic(State state, int id) {
+		int ans = 0;
+		for (IMF member : state.members) {
+			if (!member.saved) {
+				int distance = distance(state.ethan, member);
+				if (2 * distance + member.health >= 100)
+					ans += (member.health == 100 ? 0 : 2000) + 100 - member.health;
+				else
+					ans += 2 * distance;
+			}
+		}
+		return ans;
 	}
 
 }
