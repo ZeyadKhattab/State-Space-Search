@@ -8,7 +8,7 @@ public abstract class Search {
 	static int MILLION = (int) 1e6;
 	static TreeSet<State> allNodes;
 
-	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int k) {
+	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int maxDepth) {
 		SearchList nodes = new SearchList(type, problem);
 		allNodes = new TreeSet<>();
 		allNodes.add(problem.initialState);
@@ -21,7 +21,7 @@ public abstract class Search {
 			if (expandedNodes % MILLION == 0)
 				System.out.println(expandedNodes);
 			// getting all the possible states that can be reached from that node
-			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, k);
+			ArrayList<SearchTreeNode> expandedArray = expand(node, problem, type, maxDepth);
 
 			if (type.equals("BF"))
 				nodes.bfs(expandedArray);
@@ -31,7 +31,7 @@ public abstract class Search {
 			if (type.equals("UC"))
 				nodes.ucs(expandedArray);
 			if (type.equals("DL"))
-				nodes.dls(expandedArray, k);
+				nodes.dls(expandedArray, maxDepth);
 
 		}
 		return null;
@@ -39,27 +39,23 @@ public abstract class Search {
 	}
 
 	public static SearchTreeNode IDSearch(MissionImpossible problem) { // iterative deepening
-		int k = 0;
+		int maxDepth = 0;
 		while (true) {
-			SearchTreeNode node = generalSearch(problem, "DL", k++);
+			SearchTreeNode node = generalSearch(problem, "DL", maxDepth++);
 			if (node != null)
 				return node;
 		}
 	}
 
-	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, SearchProblem problem, String type, int k) {
+	private static ArrayList<SearchTreeNode> expand(SearchTreeNode node, SearchProblem problem, String type, int maxDepth) {
 		ArrayList<SearchTreeNode> newNodes = new ArrayList<>();
-		if (node.depth >= k)
+		if (node.depth >= maxDepth)
 			return newNodes;
 		ArrayList<Operator> operators = problem.getOperators();
-		boolean succeded = false;
 		for (Operator operator : operators) {
-//			 if (operator.equals(Operator.DOWN) && succeded)
-//			 break;
 			State newState = problem.stateTransition(node.state, operator);
 			if (newState == null)
 				continue;
-			succeded = true;
 			if (!isRepeated(newState)) {
 				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator, problem);
 				newNodes.add(newNode);
@@ -70,10 +66,6 @@ public abstract class Search {
 	}
 
 	private static boolean isRepeated(State newState) {
-//		for (State other : allNodes)
-//			if (other.equals(newState))
-//				return true;
-//		return false;
 		return allNodes.contains(newState);
 	}
 
