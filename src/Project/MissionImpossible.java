@@ -6,29 +6,30 @@ import java.util.Stack;
 
 public class MissionImpossible extends SearchProblem {
 
-	public MissionImpossible(State initialState) {
+	public MissionImpossible(MissionImpossibleState initialState) {
 		super(initialState);
 	}
 
 	public MissionImpossible(String initialGrid) {
-		super(new State(initialGrid));
+		super(new MissionImpossibleState(initialGrid));
 	}
 
 	@Override
-	State stateTransition(State state, Operator operator) {
-		State ans = state.clone();
+	MissionImpossibleState stateTransition(State state, Operator operator) {
+		MissionImpossibleState ans = cast(state).clone();
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
 		boolean succeded = false;
-		if (operator.equals(Operator.PICKUP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
 			succeded = ans.pickUp();
-		if (operator.equals(Operator.DOWN))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
 			succeded = ans.moveDown();
-		if (operator.equals(Operator.UP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
 			succeded = ans.moveUp();
-		if (operator.equals(Operator.LEFT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
 			succeded = ans.moveLeft();
-		if (operator.equals(Operator.RIGHT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
 			succeded = ans.moveRight();
-		if (operator.equals(Operator.DROP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
 			succeded = ans.leave();
 		if (succeded) {
 			ans.decreaseHealth();
@@ -37,14 +38,18 @@ public class MissionImpossible extends SearchProblem {
 			return null;
 	}
 
+	static MissionImpossibleState cast(State state) {
+		return (MissionImpossibleState) state;
+	}
+
 	@Override
 	boolean goalTest(State state) {
-		return state.getRemainingMembers() == 0;
+		return cast(state).getRemainingMembers() == 0;
 	}
 
 	@Override
 	int pathCost(SearchTreeNode node) {
-		State state = node.state;
+		MissionImpossibleState state = cast(node.state);
 		return 2000 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
@@ -135,7 +140,6 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-	// missing # nodes expanded
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 1; i < pathToGoal.size(); i++) {
@@ -143,8 +147,8 @@ public class MissionImpossible extends SearchProblem {
 				sb.append(",");
 			sb.append(operatorToString(pathToGoal.get(i).operator));
 		}
-		sb.append(";" + goalNode.state.getNumberOfDeaths() + ";");
-		IMF[] members = goalNode.state.getMembers();
+		sb.append(";" + cast(goalNode.state).getNumberOfDeaths() + ";");
+		IMF[] members = cast(goalNode.state).getMembers();
 		for (int i = 0; i < members.length; i++) {
 			if (i > 0)
 				sb.append(",");
@@ -169,18 +173,18 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	public static String operatorToString(Operator operator) {
-
-		if (operator.equals(Operator.DOWN))
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
 			return "down";
-		if (operator.equals(Operator.UP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
 			return "up";
-		if (operator.equals(Operator.LEFT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
 			return "left";
-		if (operator.equals(Operator.RIGHT))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
 			return "right";
-		if (operator.equals(Operator.PICKUP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
 			return "carry";
-		if (operator.equals(Operator.DROP))
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
 			return "drop";
 		return null;
 	}
@@ -188,12 +192,12 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 	ArrayList<Operator> getOperators() {
 		ArrayList<Operator> ans = new ArrayList<>();
-		ans.add(Operator.DROP);
-		ans.add(Operator.PICKUP);
-		ans.add(Operator.DOWN);
-		ans.add(Operator.UP);
-		ans.add(Operator.LEFT);
-		ans.add(Operator.RIGHT);
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
+		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.RIGHT));
 		return ans;
 
 	}
@@ -202,11 +206,12 @@ public class MissionImpossible extends SearchProblem {
 		return Math.abs(a.posX - b.posX) + Math.abs(a.posY - b.posY);
 	}
 
+	@Override
 	public int heuristic(State state, int id) {
 		int ans = 0;
-		for (IMF member : state.members) {
+		for (IMF member : cast(state).members) {
 			if (!member.saved) {
-				int distance = distance(state.ethan, member);
+				int distance = distance(cast(state).ethan, member);
 				if (2 * distance + member.health >= 100)
 					ans += (member.health == 100 ? 0 : 2000) + 100 - member.health;
 				else
