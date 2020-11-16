@@ -11,9 +11,13 @@ public abstract class SearchProblem {
 	abstract boolean goalTest(State state);
 
 	abstract int pathCost(SearchTreeNode node);
+
 	abstract ArrayList<Operator> getOperators();
+
 	public SearchProblem(State initialState) {
 		this.initialState = initialState;
 	}
+
+	abstract int heuristic(State state, int id);
 
 }

@@ -26,11 +26,18 @@ public class SearchList {
 			queue = new LinkedList<SearchTreeNode>();
 			queue.add(initialNode);
 		}
+		if (this.type.equals("AS1") || this.type.equals("AS2")) {
+			int heuristicId = this.type.charAt(2) - '0';
+			ucsQueue = new PriorityQueue<>(
+					(node1, node2) -> Integer.compare(node1.cost + problem.heuristic(node1.state, heuristicId),
+							node2.cost + problem.heuristic(node2.state, heuristicId)));
+			ucsQueue.add(initialNode);
+		}
 
 	}
 
 	public boolean isEmpty() {
-		if (this.type.equals("UC"))
+		if (this.type.equals("UC") || this.type.equals("AS1") || this.type.equals("AS2"))
 			return ucsQueue.isEmpty();
 		if (this.type.equals("DF") || this.type.equals("DL"))
 			return stack.isEmpty();
@@ -41,7 +48,7 @@ public class SearchList {
 	}
 
 	public SearchTreeNode remove() {
-		if (this.type.equals("UC"))
+		if (this.type.equals("UC") || this.type.equals("AS1") || this.type.equals("AS2"))
 			return ucsQueue.poll();
 		if (this.type.equals("DF") || this.type.equals("DL"))
 			return stack.pop();
@@ -67,6 +74,11 @@ public class SearchList {
 
 	public void dfs(ArrayList<SearchTreeNode> expandedArray) {
 		stack.addAll(expandedArray);
+	}
+
+	public void aStar(ArrayList<SearchTreeNode> expandedArray) {
+		ucsQueue.addAll(expandedArray);
+
 	}
 
 }
