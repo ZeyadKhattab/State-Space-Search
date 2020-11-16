@@ -147,11 +147,13 @@ public class MissionImpossible extends SearchProblem {
 
 	public static String getSolutionAsString(ArrayList<SearchTreeNode> pathToGoal, SearchTreeNode goalNode) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 1; i < pathToGoal.size(); i++) {
-			if (i > 1)
-				sb.append(",");
-			sb.append(operatorToString(pathToGoal.get(i).operator));
+		for (int i = 0; i + 1 < pathToGoal.size(); i++) {
+			SearchTreeNode from = pathToGoal.get(i), to = pathToGoal.get(i + 1);
+//			if (i > 1)
+//				sb.append(",");
+			sb.append(operatorToString(from, to));
 		}
+		sb.deleteCharAt(sb.length()-1);
 		sb.append(";" + cast(goalNode.state).getNumberOfDeaths() + ";");
 		IMF[] members = cast(goalNode.state).getMembers();
 		for (int i = 0; i < members.length; i++) {
@@ -177,20 +179,54 @@ public class MissionImpossible extends SearchProblem {
 		return ans;
 	}
 
-	public static String operatorToString(Operator operator) {
-		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
-			return "down";
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
-			return "up";
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
-			return "left";
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
-			return "right";
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
-			return "carry";
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
-			return "drop";
+	static String getDirection(Character a, Character b) {
+		StringBuilder sb = new StringBuilder();
+		int x1 = a.posX;
+		while (x1 != b.posX) {
+			if (x1 < b.posX) {
+
+				sb.append("down,");
+				x1++;
+			} else {
+				sb.append("up,");
+				x1--;
+			}
+		}
+		int y1 = a.posY;
+		while (y1 != b.posY) {
+			if (y1 < b.posY) {
+				sb.append("right,");
+				y1++;
+			} else {
+				sb.append("left,");
+				y1--;
+			}
+		}
+		return sb.toString();
+
+	}
+
+	public static String operatorToString(SearchTreeNode from, SearchTreeNode to) {
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) to.operator;
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
+//			return "down";
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
+//			return "up";
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
+//			return "left";
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
+//			return "right";
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP)) {
+			int memberIdx = MIOperator.memberIdx;
+			String ans = getDirection(cast(from.state).ethan, cast(to.state).getMember(memberIdx));
+			ans += "pickup,";
+			return ans;
+		}
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP)) {
+			String ans = getDirection(cast(from.state).ethan, MissionImpossibleState.submarine);
+			ans += "drop,";
+			return ans;
+		}
 		return null;
 	}
 
