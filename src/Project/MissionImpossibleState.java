@@ -77,23 +77,29 @@ public class MissionImpossibleState extends State {
 		return false;
 	}
 
-	boolean pickUp() {
+	boolean pickUp(int memberIdx) {
 		if (currentCarry == maxSaves)
 			return false;
-		for (IMF member : members)
-			if (member.posX == ethan.posX && member.posY == ethan.posY && !member.saved) {
-				currentCarry++;
-				member.saved = true;
-				return true;
-			}
-
-		return false;
+		IMF member = members[memberIdx];
+		if (member.saved)
+			return false;
+		decreaseHealth(MissionImpossible.distance(ethan, member));
+		currentCarry++;
+		member.saved = true;
+		ethan.posX = member.posX;
+		ethan.posY = member.posY;
+		decreaseHealth(1);
+		return true;
 	}
 
 	boolean leave() {
-		if (ethan.posX == submarine.posX && ethan.posY == submarine.posY && currentCarry > 0) {
+		if (currentCarry > 0) {
 			totalSaved += currentCarry;
 			currentCarry = 0;
+			decreaseHealth(MissionImpossible.distance(ethan, submarine)+1);
+			ethan.posX = submarine.posX;
+			ethan.posY = submarine.posY;
+			
 			return true;
 		}
 		return false;
@@ -103,12 +109,12 @@ public class MissionImpossibleState extends State {
 		return numberOfMembers - totalSaved;
 	}
 
-	void decreaseHealth() {
+	void decreaseHealth(int time) {
 
 		for (IMF imf : members) {
 			if (imf.saved)
 				continue;
-			int decrease = Math.min(2, 100 - imf.health);
+			int decrease = Math.min(2 * time, 100 - imf.health);
 			imf.health += decrease;
 			totalDamage += decrease;
 		}

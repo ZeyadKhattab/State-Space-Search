@@ -20,20 +20,24 @@ public class MissionImpossible extends SearchProblem {
 		MissionImpossibleState ans = cast(state).clone();
 		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) operator;
 		boolean succeded = false;
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP))
-			succeded = ans.pickUp();
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
-			succeded = ans.moveDown();
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
-			succeded = ans.moveUp();
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
-			succeded = ans.moveLeft();
-		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
-			succeded = ans.moveRight();
+		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP)) {
+			int memberIdx = MIOperator.memberIdx;
+			succeded = ans.pickUp(memberIdx);
+		}
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
+//			succeded = ans.moveDown();
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
+//			succeded = ans.moveUp();
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
+//			succeded = ans.moveLeft();
+//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
+//			succeded = ans.moveRight();
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
+
 			succeded = ans.leave();
+
 		if (succeded) {
-			ans.decreaseHealth();
+
 			return ans;
 		} else
 			return null;
@@ -194,11 +198,12 @@ public class MissionImpossible extends SearchProblem {
 	ArrayList<Operator> getOperators() {
 		ArrayList<Operator> ans = new ArrayList<>();
 		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
-		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP));
-		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
-		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
-		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
-		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.RIGHT));
+		for (int i = 0; i < MissionImpossibleState.numberOfMembers; i++)
+			ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP, i));
+//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
+//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
+//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
+//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.RIGHT));
 		return ans;
 
 	}
