@@ -1,6 +1,7 @@
 package Project;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
@@ -127,7 +128,7 @@ public class MissionImpossible extends SearchProblem {
 		SearchTreeNode ans = null;
 		Search.expandedNodes = 0;
 		if (strategy.equals("BF") || strategy.equals("DF") || strategy.equals("UC") || strategy.equals("AS1")
-				|| strategy.equals("AS2"))
+				|| strategy.equals("AS2") || strategy.equals("GR1") || strategy.equals("GR2"))
 			ans = Search.generalSearch(problem, strategy, Integer.MAX_VALUE);
 		else if (strategy.equals("ID"))
 			ans = Search.IDSearch(problem);
@@ -206,17 +207,55 @@ public class MissionImpossible extends SearchProblem {
 		return Math.abs(a.posX - b.posX) + Math.abs(a.posY - b.posY);
 	}
 
+	static int[][] getPermutations(int n) {
+		if (n == 1)
+			return new int[][] { { 0 } };
+		if (n == 2) {
+			return new int[][] { { 0, 1 }, { 1, 0 } };
+		} else
+			return new int[][] { { 0, 1, 2 }, { 0, 2, 1 }, { 1, 0, 2 }, { 1, 2, 0 }, { 2, 0, 1 }, { 2, 1, 0 } };
+	}
+
+	static int costAfterDistance(int distance, IMF member) {
+		if (2 * distance + member.health >= 100)
+			return (member.health == 100 ? 0 : 2000) + 100 - member.health;
+		else
+			return 2 * distance;
+	}
+
 	@Override
 	public int heuristic(State state, int id) {
 		int ans = 0;
-		for (IMF member : cast(state).members) {
-			if (!member.saved) {
-				int distance = distance(cast(state).ethan, member);
-				if (2 * distance + member.health >= 100)
-					ans += (member.health == 100 ? 0 : 2000) + 100 - member.health;
-				else
-					ans += 2 * distance;
+		if (id == 1) {
+			for (IMF member : cast(state).members) {
+				if (!member.saved) {
+					int distance = distance(cast(state).ethan, member);
+					ans += costAfterDistance(distance, member);
+				}
 			}
+		} else {
+			ArrayList<IMF> members = new ArrayList();
+			for (IMF member : cast(state).members)
+				if (!member.saved)
+					members.add(member);
+			if (members.size() == 0) {
+				return 0;
+			}
+			Collections.sort(members,
+					(x, y) -> Integer.compare(distance(cast(state).ethan, y), distance(cast(state).ethan, x)));
+			int[][] permutations = getPermutations(Math.min(members.size(), 3));
+			ans = Integer.MAX_VALUE;
+			for (int[] permutation : permutations) {
+				int curr = 0;
+				for (int i = 0; i < permutation.length; i++) {
+					Character prev = i == 0 ? cast(state).ethan : members.get(permutation[i - 1]);
+					IMF member = members.get(permutation[i]);
+					int distance = distance(prev, member);
+					curr += costAfterDistance(distance, member);
+				}
+				ans = Math.min(ans, curr);
+			}
+
 		}
 		return ans;
 	}
