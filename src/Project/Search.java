@@ -32,6 +32,9 @@ public abstract class Search {
 				nodes.dls(expandedArray, maxDepth);
 			if (type.equals("AS1") || type.equals("AS2"))
 				nodes.aStar(expandedArray);
+			if (type.equals("GR1") || type.equals("GR2"))
+				nodes.greedy(expandedArray);
+
 
 		}
 		return null;
