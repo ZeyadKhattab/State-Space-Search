@@ -63,7 +63,7 @@ public class MissionImpossible extends SearchProblem {
 	@Override
 
 	public int pathCost(SearchTreeNode node) {
-		MissionImpossibleState state = cast(node.state);
+		MissionImpossibleState state = cast(node.getState());
 		return 2000 * state.getNumberOfDeaths() + state.totalDamage;
 	}
 
@@ -148,7 +148,7 @@ public class MissionImpossible extends SearchProblem {
 		ArrayList<SearchTreeNode> pathToGoal = getPathToGoal(ans);
 		if (visualize) {
 			for (SearchTreeNode node : pathToGoal)
-				System.out.println(node.state + "-----------------\n");
+				System.out.println(node.getState() + "-----------------\n");
 		}
 		
 		return getSolutionAsString(pathToGoal, ans);
@@ -164,8 +164,8 @@ public class MissionImpossible extends SearchProblem {
 			sb.append(operatorToString(from, to));
 		}
 		sb.deleteCharAt(sb.length()-1);
-		sb.append(";" + cast(goalNode.state).getNumberOfDeaths() + ";");
-		IMF[] members = cast(goalNode.state).getMembers();
+		sb.append(";" + cast(goalNode.getState()).getNumberOfDeaths() + ";");
+		IMF[] members = cast(goalNode.getState()).getMembers();
 		for (int i = 0; i < members.length; i++) {
 			if (i > 0)
 				sb.append(",");
@@ -181,7 +181,7 @@ public class MissionImpossible extends SearchProblem {
 		SearchTreeNode node = goalNode;
 		while (node != null) {
 			stack.add(node);
-			node = node.parent;
+			node = node.getParent();
 		}
 		ArrayList<SearchTreeNode> ans = new ArrayList<>();
 		while (!stack.isEmpty())
@@ -190,7 +190,7 @@ public class MissionImpossible extends SearchProblem {
 	}
 
 	public static String operatorToString(SearchTreeNode from, SearchTreeNode to) {
-		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) to.operator;
+		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) to.getOperator();
 //		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
 //			return "down";
 //		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
@@ -201,12 +201,12 @@ public class MissionImpossible extends SearchProblem {
 //			return "right";
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP)) {
 			int memberIdx = MIOperator.memberIdx;
-			String ans = getDirection(cast(from.state).ethan, cast(to.state).getMember(memberIdx));
+			String ans = getDirection(cast(from.getState()).ethan, cast(to.getState()).getMember(memberIdx));
 			ans += "carry,";
 			return ans;
 		}
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP)) {
-			String ans = getDirection(cast(from.state).ethan, MissionImpossibleState.submarine);
+			String ans = getDirection(cast(from.getState()).ethan, MissionImpossibleState.submarine);
 			ans += "drop,";
 			return ans;
 		}

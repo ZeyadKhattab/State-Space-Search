@@ -99,11 +99,11 @@ public class MissionImpossibleState extends State {
 		if (currentCarry == maxSaves)
 			return false;
 		IMF member = members[memberIdx];
-		if (member.saved)
+		if (member.picked)
 			return false;
 		decreaseHealth(MissionImpossible.distance(ethan, member));
 		currentCarry++;
-		member.saved = true;
+		member.picked = true;
 		ethan.posX = member.posX;
 		ethan.posY = member.posY;
 		decreaseHealth(1);
@@ -130,7 +130,7 @@ public class MissionImpossibleState extends State {
 	void decreaseHealth(int time) {
 
 		for (IMF imf : members) {
-			if (imf.saved)
+			if (imf.picked)
 				continue;
 			int decrease = Math.min(2 * time, 100 - imf.health);
 			imf.health += decrease;
@@ -179,7 +179,7 @@ public class MissionImpossibleState extends State {
 					cell += "SUBM ";
 				String mem = "NULL ";
 				for (IMF m : members)
-					if (m.posX == i && m.posY == j && !m.saved)
+					if (m.posX == i && m.posY == j && !m.picked)
 						mem = "(" + m.health + ")";
 				cell += mem;
 				while (cell.length() < 16)
@@ -207,8 +207,8 @@ public class MissionImpossibleState extends State {
 		if (totalSaved != s.totalSaved)
 			return Integer.compare(totalSaved, s.totalSaved);
 		for (int i = 0; i < numberOfMembers; i++) {
-			if (members[i].saved != s.members[i].saved)
-				return members[i].saved ? 1 : -1;
+			if (members[i].picked != s.members[i].picked)
+				return members[i].picked ? 1 : -1;
 			if (members[i].health != s.members[i].health)
 				return Integer.compare(members[i].health, s.members[i].health);
 		}
