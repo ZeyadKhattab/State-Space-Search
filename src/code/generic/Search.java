@@ -15,7 +15,6 @@ public abstract class Search {
 			SearchTreeNode node = nodes.remove();
 			if (problem.goalTest(node.state))
 				return node;
-
 			expandedNodes++;
 
 			// getting all the possible states that can be reached from that node

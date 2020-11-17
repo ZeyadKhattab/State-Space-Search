@@ -4,9 +4,7 @@ package code.mission;
 import code.generic.State;
 
 public class MissionImpossibleState extends State {
-	static int gridH, gridW, numberOfMembers, maxSaves;
 	Character ethan;
-	static Character submarine;
 	IMF[] members;
 	int currentCarry, totalSaved, totalDamage;
 
@@ -15,19 +13,19 @@ public class MissionImpossibleState extends State {
 		String[] split = state.split(";");
 		// Grid Dimensions
 		String[] gridD = split[0].split(",");
-		gridW = Integer.parseInt(gridD[0]);
-		gridH = Integer.parseInt(gridD[1]);
+		MissionImpossible.gridW = Integer.parseInt(gridD[0]);
+		MissionImpossible.gridH = Integer.parseInt(gridD[1]);
 		// Ethan
 		String[] ethanP = split[1].split(",");
 		ethan = new Character(Integer.parseInt(ethanP[0]), Integer.parseInt(ethanP[1]));
 		// Submarine
 		String[] subMarineP = split[2].split(",");
-		submarine = new Character(Integer.parseInt(subMarineP[0]), Integer.parseInt(subMarineP[1]));
+		MissionImpossible.submarine = new Character(Integer.parseInt(subMarineP[0]), Integer.parseInt(subMarineP[1]));
 		// IMF Positions and Health
 		String[] IMFP = split[3].split(",");
 		String[] IMFH = split[4].split(",");
-		numberOfMembers = IMFH.length;
-		members = new IMF[numberOfMembers];
+		MissionImpossible.numberOfMembers = IMFH.length;
+		members = new IMF[MissionImpossible.numberOfMembers];
 		for (int i = 0, j = 0; i < IMFP.length; i += 2, j++) {
 			int posX = Integer.parseInt(IMFP[i]);
 			int posY = Integer.parseInt(IMFP[i + 1]);
@@ -36,7 +34,7 @@ public class MissionImpossibleState extends State {
 		}
 		// Max Saves Per Once
 		String[] c = split[5].split(",");
-		maxSaves = Integer.parseInt(c[0]);
+		MissionImpossible.maxSaves = Integer.parseInt(c[0]);
 		currentCarry = 0;
 	}
 
@@ -72,7 +70,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	boolean moveDown() {
-		if (ethan.posX + 1 < gridH) {
+		if (ethan.posX + 1 < MissionImpossible.gridH) {
 			ethan.posX++;
 			return true;
 		}
@@ -88,7 +86,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	boolean moveRight() {
-		if (ethan.posY + 1 < gridW) {
+		if (ethan.posY + 1 < MissionImpossible.gridW) {
 			ethan.posY++;
 			return true;
 		}
@@ -96,7 +94,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	boolean pickUp(int memberIdx) {
-		if (currentCarry == maxSaves)
+		if (currentCarry == MissionImpossible.maxSaves)
 			return false;
 		IMF member = members[memberIdx];
 		if (member.picked)
@@ -114,9 +112,9 @@ public class MissionImpossibleState extends State {
 		if (currentCarry > 0) {
 			totalSaved += currentCarry;
 			currentCarry = 0;
-			decreaseHealth(MissionImpossible.distance(ethan, submarine)+1);
-			ethan.posX = submarine.posX;
-			ethan.posY = submarine.posY;
+			decreaseHealth(MissionImpossible.distance(ethan, MissionImpossible.submarine)+1);
+			ethan.posX = MissionImpossible.submarine.posX;
+			ethan.posY = MissionImpossible.submarine.posY;
 			
 			return true;
 		}
@@ -124,7 +122,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	int getRemainingMembers() {
-		return numberOfMembers - totalSaved;
+		return MissionImpossible.numberOfMembers - totalSaved;
 	}
 
 	void decreaseHealth(int time) {
@@ -163,19 +161,19 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public MissionImpossibleState clone() {
-		return new MissionImpossibleState(numberOfMembers, members, totalSaved, currentCarry, totalDamage, ethan);
+		return new MissionImpossibleState(MissionImpossible.numberOfMembers, members, totalSaved, currentCarry, totalDamage, ethan);
 
 	}
 
 	@Override
 	public String toString() {
 		String res = "";
-		for (int i = 0; i < gridH; i++) {
-			for (int j = 0; j < gridW; j++) {
+		for (int i = 0; i < MissionImpossible.gridH; i++) {
+			for (int j = 0; j < MissionImpossible.gridW; j++) {
 				String cell = "";
 				if (ethan.posX == i && ethan.posY == j)
 					cell += "ETHAN ";
-				if (submarine.posX == i && submarine.posY == j)
+				if (MissionImpossible.submarine.posX == i && MissionImpossible.submarine.posY == j)
 					cell += "SUBM ";
 				String mem = "NULL ";
 				for (IMF m : members)
@@ -206,7 +204,7 @@ public class MissionImpossibleState extends State {
 			return Integer.compare(totalDamage, s.totalDamage);
 		if (totalSaved != s.totalSaved)
 			return Integer.compare(totalSaved, s.totalSaved);
-		for (int i = 0; i < numberOfMembers; i++) {
+		for (int i = 0; i < MissionImpossible.numberOfMembers; i++) {
 			if (members[i].picked != s.members[i].picked)
 				return members[i].picked ? 1 : -1;
 			if (members[i].health != s.members[i].health)

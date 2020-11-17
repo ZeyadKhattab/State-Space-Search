@@ -13,6 +13,8 @@ import java.util.Stack;
 
 
 public class MissionImpossible extends SearchProblem {
+	static int gridH, gridW, numberOfMembers, maxSaves;
+	static Character submarine;
 
 	public MissionImpossible(MissionImpossibleState initialState) {
 		super(initialState);
@@ -44,10 +46,9 @@ public class MissionImpossible extends SearchProblem {
 
 			succeded = ans.leave();
 
-		if (succeded) {
-
+		if (succeded) 
 			return ans;
-		} else
+				
 			return null;
 	}
 
@@ -206,7 +207,7 @@ public class MissionImpossible extends SearchProblem {
 			return ans;
 		}
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP)) {
-			String ans = getDirection(cast(from.getState()).ethan, MissionImpossibleState.submarine);
+			String ans = getDirection(cast(from.getState()).ethan, MissionImpossible.submarine);
 			ans += "drop,";
 			return ans;
 		}
@@ -242,10 +243,12 @@ public class MissionImpossible extends SearchProblem {
 
 	@Override
 	public ArrayList<Operator> getOperators() {
+	//	int totalSaved=cast(node.getState()).totalSaved;
 		ArrayList<Operator> ans = new ArrayList<>();
 		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
-		for (int i = 0; i < MissionImpossibleState.numberOfMembers; i++)
+		for (int i = 0; i < MissionImpossible.numberOfMembers; i++) {
 			ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP, i));
+		}
 //		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
 //		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
 //		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
