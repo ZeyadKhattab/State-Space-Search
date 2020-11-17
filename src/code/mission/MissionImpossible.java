@@ -279,7 +279,7 @@ public class MissionImpossible extends SearchProblem {
 		int ans = 0;
 		if (id == 1) {
 			for (IMF member : cast(state).members) {
-				if (!member.saved) {
+				if (!member.picked) {
 					int distance = distance(cast(state).ethan, member);
 					ans += costAfterDistance(distance, member);
 				}
@@ -287,7 +287,7 @@ public class MissionImpossible extends SearchProblem {
 		} else {
 			ArrayList<IMF> members = new ArrayList();
 			for (IMF member : cast(state).members)
-				if (!member.saved)
+				if (!member.picked)
 					members.add(member);
 			if (members.size() == 0) {
 				return 0;
