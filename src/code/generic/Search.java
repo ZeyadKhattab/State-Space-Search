@@ -1,16 +1,20 @@
 package code.generic;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.TreeSet;
 
 public abstract class Search {
 	public static int expandedNodes = 0;
 	static TreeSet<State> allNodes;
-
+	static HashSet<String> allNodesHash;
+	
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int maxDepth) {
 		SearchList nodes = new SearchList(type, problem);
 		allNodes = new TreeSet<>();
 		allNodes.add(problem.initialState);
+		allNodesHash = new HashSet<>();
+		allNodesHash.add(problem.initialState.toHash());
 		while (!nodes.isEmpty()) {
 			SearchTreeNode node = nodes.remove();
 			if (problem.goalTest(node.state))
@@ -63,14 +67,16 @@ public abstract class Search {
 			if (!isRepeated(newState)) {
 				SearchTreeNode newNode = new SearchTreeNode(node, newState, operator, problem);
 				newNodes.add(newNode);
-				allNodes.add(newState);
+//				allNodes.add(newState);
+				allNodesHash.add(newState.toHash());
 			}
 		}
 		return newNodes;
 	}
 
 	private static boolean isRepeated(State newState) {
-		return allNodes.contains(newState);
+//		return allNodes.contains(newState);
+		return allNodesHash.contains(newState.toHash());
 	}
 
 	private static boolean isRepeatedWithAncestors(SearchTreeNode node, State newState) {

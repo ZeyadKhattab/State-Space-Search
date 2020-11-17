@@ -7,4 +7,6 @@ public abstract class State implements Comparable<State> {
 
 	public abstract State clone();
 
+	public abstract String toHash();
+	
 }

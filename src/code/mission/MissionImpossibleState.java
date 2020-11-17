@@ -222,5 +222,15 @@ public class MissionImpossibleState extends State {
 		}
 		return 0;
 	}
-
+	
+	public String toHash() {
+		StringBuilder res = new StringBuilder();
+		res.append(ethan.posX+","+ethan.posY+";");
+		for(int i=0;i<members.length;i++) {
+			if(i>0) res.append(",");
+			res.append("("+members[i].posX+","+members[i].posY+","+members[i].health+","+members[i].saved+")");
+		}
+		res.append(";"+currentCarry+","+totalSaved+","+totalDamage+";");
+		return res.toString();
+	}
 }

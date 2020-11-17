@@ -66,7 +66,7 @@ public class TestMissionImpossible {
 	
 	@Test
 	public void testa7() throws Exception {
-		String solution = /*MissionImpossible.solve(grid11, "BF", false)*/ "";
+		String solution = MissionImpossible.solve(grid11, "BF", false);
 		solution = solution.replace(" ", "");
 		assertTrue(applyPlan(grid11, solution));
 	}
