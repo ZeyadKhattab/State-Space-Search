@@ -1,10 +1,10 @@
 package code.generic;
 
 public class SearchTreeNode {
-	public State state;
+	State state;
 	int depth, cost;
-	public SearchTreeNode parent;
-	public Operator operator;
+	SearchTreeNode parent;
+	Operator operator;
 
 	SearchTreeNode(SearchTreeNode parent, State state, Operator operator, SearchProblem problem) {
 		this.state = state;
@@ -21,5 +21,16 @@ public class SearchTreeNode {
 		operator = null;
 		cost = problem.pathCost(this);
 	}
-
+	
+	public State getState() {
+		return state;
+	}
+	
+	public SearchTreeNode getParent() {
+		return parent;
+	}
+	
+	public Operator getOperator() {
+		return operator;
+	}
 }
