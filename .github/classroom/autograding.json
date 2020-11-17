@@ -1,0 +1,854 @@
+{
+  "tests": [
+    {
+      "name": "testa1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testd1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "testd2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "testd3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "testd4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "testd5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 5,
+      "points": 1
+    },
+    {
+      "name": "teste1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testg2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testg3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testg4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testg5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh1",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh1",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh2",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh2",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh3",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh3",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh4",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh4",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh5",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh5",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testa6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testd6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "testd7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 3,
+      "points": 1
+    },
+    {
+      "name": "testd8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testd8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 2,
+      "points": 1
+    },
+    {
+      "name": "teste6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testh6",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh6",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testh7",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh7",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh8",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh8",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testa9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testa10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "teste10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testh9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testh10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testg9",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg9",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg10",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg10",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testa11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testa11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testb11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testb11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testc11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testc11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "teste11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.teste11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testf11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testf11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 1
+    },
+    {
+      "name": "testg11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testg11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    },
+    {
+      "name": "testh11",
+      "setup": "",
+      "run": "gradle clean test --tests TestMissionImpossible.testh11",
+      "input": "",
+      "output": "",
+      "comparison": "included",
+      "timeout": 1,
+      "points": 2
+    }
+  ]
+}
