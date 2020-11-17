@@ -40,8 +40,23 @@ public class MissionImpossibleState extends State {
 		currentCarry = 0;
 	}
 
-	public MissionImpossibleState() {
+	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved,
+			int currentCarry, int totalDamage, Character ethan){
+		this.members = new IMF[numberOfMembers];
 
+		this.totalSaved = totalSaved;
+
+		this.currentCarry = currentCarry;
+		this.totalDamage = totalDamage;
+		this.ethan = ethan.clone();
+
+		for (int i = 0; i < numberOfMembers; i++) {
+			this.members[i] = members[i].clone();
+
+		}
+	}
+	public MissionImpossibleState(){
+		
 	}
 
 	Character getEthan() {
@@ -134,16 +149,7 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public boolean equals(State other) {
-		MissionImpossibleState s = MissionImpossible.cast(other);
-		boolean result = true;
-
-		for (int i = 0; i < numberOfMembers; i++) {
-			result = result && (s.members[i].saved == members[i].saved) && (s.members[i].posX == members[i].posX)
-					&& (s.members[i].posY == members[i].posY && s.members[i].health == members[i].health);
-		}
-		result = result && (s.ethan.posX == ethan.posX) && (s.ethan.posY == ethan.posY);
-		result = result && currentCarry == s.currentCarry && totalDamage == s.totalDamage && totalSaved == s.totalSaved;
-		return result;
+		return this.compareTo(other) == 0;
 
 	}
 
@@ -157,21 +163,7 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public MissionImpossibleState clone() {
-		MissionImpossibleState newState = new MissionImpossibleState();
-
-		newState.members = new IMF[numberOfMembers];
-
-		newState.totalSaved = totalSaved;
-
-		newState.currentCarry = currentCarry;
-		newState.totalDamage = totalDamage;
-		newState.ethan = new Character(ethan.posX, ethan.posY);
-
-		for (int i = 0; i < numberOfMembers; i++) {
-			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health, members[i].saved);
-
-		}
-		return newState;
+		return new MissionImpossibleState(numberOfMembers, members, totalSaved, currentCarry, totalDamage, ethan);
 
 	}
 
