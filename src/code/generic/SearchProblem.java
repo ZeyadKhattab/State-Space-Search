@@ -12,7 +12,7 @@ public abstract class SearchProblem {
 
 	public abstract int pathCost(SearchTreeNode node);
 
-	public abstract ArrayList<Operator> getOperators();
+	public abstract ArrayList<Operator> getOperators(SearchTreeNode node);
 
 	public SearchProblem(State initialState) {
 		this.initialState = initialState;

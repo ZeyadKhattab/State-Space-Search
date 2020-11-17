@@ -54,7 +54,7 @@ public abstract class Search {
 		ArrayList<SearchTreeNode> newNodes = new ArrayList<>();
 		if (node.depth >= maxDepth)
 			return newNodes;
-		ArrayList<Operator> operators = problem.getOperators();
+		ArrayList<Operator> operators = problem.getOperators(node);
 		for (Operator operator : operators) {
 			State newState = problem.stateTransition(node.state, operator);
 			if (newState == null)
