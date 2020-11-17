@@ -7,7 +7,7 @@ public class MissionImpossibleState extends State {
 	Character ethan;
 	IMF[] members;
 	int currentCarry, totalSaved, totalDamage;
-
+	
 	// 5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
 	public MissionImpossibleState(String state) {
 		String[] split = state.split(";");
@@ -40,7 +40,7 @@ public class MissionImpossibleState extends State {
 
 	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved,
 			int currentCarry, int totalDamage, Character ethan){
-		this.members = new IMF[numberOfMembers];
+		this.members = new IMF[numberOfMembers-totalSaved-currentCarry];
 
 		this.totalSaved = totalSaved;
 
@@ -48,9 +48,9 @@ public class MissionImpossibleState extends State {
 		this.totalDamage = totalDamage;
 		this.ethan = ethan.clone();
 
-		for (int i = 0; i < numberOfMembers; i++) {
-			this.members[i] = members[i].clone();
-
+		for (int i = 0, j = 0; i < members.length; i++) {
+			if(!members[i].picked)
+				this.members[j++] = members[i].clone();
 		}
 	}
 	public MissionImpossibleState(){
@@ -204,7 +204,7 @@ public class MissionImpossibleState extends State {
 			return Integer.compare(totalDamage, s.totalDamage);
 		if (totalSaved != s.totalSaved)
 			return Integer.compare(totalSaved, s.totalSaved);
-		for (int i = 0; i < MissionImpossible.numberOfMembers; i++) {
+		for (int i = 0; i < members.length; i++) {
 			if (members[i].picked != s.members[i].picked)
 				return members[i].picked ? 1 : -1;
 			if (members[i].health != s.members[i].health)

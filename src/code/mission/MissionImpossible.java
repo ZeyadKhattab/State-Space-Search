@@ -246,11 +246,8 @@ public class MissionImpossible extends SearchProblem {
 	//	int totalSaved=cast(node.getState()).totalSaved;
 		ArrayList<Operator> ans = new ArrayList<>();
 		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
-		MissionImpossibleState state = cast(node.getState());
-		for (int i = 0; i < state.members.length; i++) {
-			IMF member = state.members[i];
-			if(!member.picked)
-				ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP, i));
+		for (int i = 0; i < MissionImpossible.numberOfMembers - cast(node.getState()).totalSaved-cast(node.getState()).currentCarry; i++) {
+			ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP, i));
 		}
 //		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
 //		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
