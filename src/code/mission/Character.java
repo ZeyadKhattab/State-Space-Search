@@ -12,4 +12,8 @@ public class Character {
 		this.posX = posX;
 		this.posY = posY;
 	}
+	
+	public Character clone() {
+		return new Character(posX, posY);
+	}
 }

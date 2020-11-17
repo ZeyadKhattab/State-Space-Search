@@ -13,4 +13,8 @@ public class IMF extends Character {
 		this(posX, posY, health);
 		this.saved = saved;
 	}
+	
+	public IMF clone() {
+		return new IMF(posX, posY, health, saved);
+	}
 }
