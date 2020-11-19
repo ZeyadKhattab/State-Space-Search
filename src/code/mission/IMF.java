@@ -9,9 +9,9 @@ public class IMF extends Character {
 		this.health = health;
 	}
 
-	public IMF(int posX, int posY, int health, boolean saved) {
+	public IMF(int posX, int posY, int health, boolean picked) {
 		this(posX, posY, health);
-		this.picked = saved;
+		this.picked = picked;
 	}
 	
 	public IMF clone() {
