@@ -11,7 +11,6 @@ import java.util.Collections;
 import java.util.Random;
 import java.util.Stack;
 
-
 public class MissionImpossible extends SearchProblem {
 	static int gridH, gridW, numberOfMembers, maxSaves;
 	static Character submarine;
@@ -34,22 +33,9 @@ public class MissionImpossible extends SearchProblem {
 			int memberIdx = MIOperator.memberIdx;
 			succeded = ans.pickUp(memberIdx);
 		}
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
-//			succeded = ans.moveDown();
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
-//			succeded = ans.moveUp();
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
-//			succeded = ans.moveLeft();
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
-//			succeded = ans.moveRight();
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DROP))
-
-			succeded = ans.leave();
-
-		if (succeded) 
-			return ans;
-				
-			return null;
+			succeded = ans.drop();
+		return succeded ? ans : null;
 	}
 
 	public static MissionImpossibleState cast(State state) {
@@ -136,7 +122,6 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-	// remaining Greedy and a star
 	public static String solve(String grid, String strategy, boolean visualize) {
 		MissionImpossible problem = new MissionImpossible(grid);
 		SearchTreeNode ans = null;
@@ -151,7 +136,7 @@ public class MissionImpossible extends SearchProblem {
 			for (SearchTreeNode node : pathToGoal)
 				System.out.println(node.getState() + "-----------------\n");
 		}
-		
+
 		return getSolutionAsString(pathToGoal, ans);
 
 	}
@@ -160,11 +145,9 @@ public class MissionImpossible extends SearchProblem {
 		StringBuilder sb = new StringBuilder();
 		for (int i = 0; i + 1 < pathToGoal.size(); i++) {
 			SearchTreeNode from = pathToGoal.get(i), to = pathToGoal.get(i + 1);
-//			if (i > 1)
-//				sb.append(",");
 			sb.append(operatorToString(from, to));
 		}
-		sb.deleteCharAt(sb.length()-1);
+		sb.deleteCharAt(sb.length() - 1);
 		sb.append(";" + cast(goalNode.getState()).getNumberOfDeaths() + ";");
 		IMF[] members = cast(goalNode.getState()).getMembers();
 		for (int i = 0; i < members.length; i++) {
@@ -192,14 +175,6 @@ public class MissionImpossible extends SearchProblem {
 
 	public static String operatorToString(SearchTreeNode from, SearchTreeNode to) {
 		MissionImpossibleOperator MIOperator = (MissionImpossibleOperator) to.getOperator();
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.DOWN))
-//			return "down";
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.UP))
-//			return "up";
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.LEFT))
-//			return "left";
-//		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.RIGHT))
-//			return "right";
 		if (MIOperator.operator.equals(MissionImpossibleOperator.Operator.PICKUP)) {
 			int memberIdx = MIOperator.memberIdx;
 			String ans = getDirection(cast(from.getState()).ethan, cast(to.getState()).getMember(memberIdx));
@@ -213,6 +188,7 @@ public class MissionImpossible extends SearchProblem {
 		}
 		return null;
 	}
+
 	static String getDirection(Character a, Character b) {
 		StringBuilder sb = new StringBuilder();
 		int x1 = a.posX;
@@ -240,19 +216,14 @@ public class MissionImpossible extends SearchProblem {
 
 	}
 
-
 	@Override
 	public ArrayList<Operator> getOperators(SearchTreeNode node) {
-	//	int totalSaved=cast(node.getState()).totalSaved;
 		ArrayList<Operator> ans = new ArrayList<>();
 		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DROP));
-		for (int i = 0; i < MissionImpossible.numberOfMembers - cast(node.getState()).totalSaved-cast(node.getState()).currentCarry; i++) {
+		for (int i = 0; i < MissionImpossible.numberOfMembers - cast(node.getState()).totalSaved
+				- cast(node.getState()).currentCarry; i++) {
 			ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.PICKUP, i));
 		}
-//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.DOWN));
-//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.UP));
-//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.LEFT));
-//		ans.add(new MissionImpossibleOperator(MissionImpossibleOperator.Operator.RIGHT));
 		return ans;
 
 	}

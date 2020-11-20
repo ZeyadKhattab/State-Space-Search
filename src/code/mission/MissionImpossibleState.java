@@ -1,13 +1,12 @@
 package code.mission;
 
-
 import code.generic.State;
 
 public class MissionImpossibleState extends State {
 	Character ethan;
 	IMF[] members;
 	int currentCarry, totalSaved, totalDamage;
-	
+
 	// 5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
 	public MissionImpossibleState(String state) {
 		String[] split = state.split(";");
@@ -38,9 +37,9 @@ public class MissionImpossibleState extends State {
 		currentCarry = 0;
 	}
 
-	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved,
-			int currentCarry, int totalDamage, Character ethan){
-		this.members = new IMF[numberOfMembers-totalSaved-currentCarry];
+	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved, int currentCarry, int totalDamage,
+			Character ethan) {
+		this.members = new IMF[numberOfMembers - totalSaved - currentCarry];
 
 		this.totalSaved = totalSaved;
 
@@ -49,12 +48,9 @@ public class MissionImpossibleState extends State {
 		this.ethan = ethan.clone();
 
 		for (int i = 0, j = 0; i < members.length; i++) {
-			if(!members[i].picked)
+			if (!members[i].picked)
 				this.members[j++] = members[i].clone();
 		}
-	}
-	public MissionImpossibleState(){
-		
 	}
 
 	Character getEthan() {
@@ -108,14 +104,14 @@ public class MissionImpossibleState extends State {
 		return true;
 	}
 
-	boolean leave() {
+	boolean drop() {
 		if (currentCarry > 0) {
 			totalSaved += currentCarry;
 			currentCarry = 0;
-			decreaseHealth(MissionImpossible.distance(ethan, MissionImpossible.submarine)+1);
+			decreaseHealth(MissionImpossible.distance(ethan, MissionImpossible.submarine) + 1);
 			ethan.posX = MissionImpossible.submarine.posX;
 			ethan.posY = MissionImpossible.submarine.posY;
-			
+
 			return true;
 		}
 		return false;
@@ -135,7 +131,6 @@ public class MissionImpossibleState extends State {
 			totalDamage += decrease;
 		}
 	}
-
 
 	IMF[] getMembers() {
 		return members;
@@ -161,7 +156,8 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public MissionImpossibleState clone() {
-		return new MissionImpossibleState(MissionImpossible.numberOfMembers, members, totalSaved, currentCarry, totalDamage, ethan);
+		return new MissionImpossibleState(MissionImpossible.numberOfMembers, members, totalSaved, currentCarry,
+				totalDamage, ethan);
 
 	}
 
