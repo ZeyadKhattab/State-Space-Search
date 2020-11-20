@@ -1,4 +1,4 @@
-package Project;
+package code.generic;
 
 public class Operator {
 

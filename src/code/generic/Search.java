@@ -1,10 +1,10 @@
-package Project;
+package code.generic;
 
 import java.util.ArrayList;
 import java.util.TreeSet;
 
 public abstract class Search {
-	static int expandedNodes = 0;
+	public static int expandedNodes = 0;
 	static TreeSet<State> allNodes;
 
 	public static SearchTreeNode generalSearch(SearchProblem problem, String type, int maxDepth) {
@@ -15,7 +15,6 @@ public abstract class Search {
 			SearchTreeNode node = nodes.remove();
 			if (problem.goalTest(node.state))
 				return node;
-
 			expandedNodes++;
 
 			// getting all the possible states that can be reached from that node
@@ -55,7 +54,7 @@ public abstract class Search {
 		ArrayList<SearchTreeNode> newNodes = new ArrayList<>();
 		if (node.depth >= maxDepth)
 			return newNodes;
-		ArrayList<Operator> operators = problem.getOperators();
+		ArrayList<Operator> operators = problem.getOperators(node);
 		for (Operator operator : operators) {
 			State newState = problem.stateTransition(node.state, operator);
 			if (newState == null)

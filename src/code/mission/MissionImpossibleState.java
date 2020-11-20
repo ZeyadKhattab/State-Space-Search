@@ -1,9 +1,9 @@
-package Project;
+package code.mission;
+
+import code.generic.State;
 
 public class MissionImpossibleState extends State {
-	static int gridH, gridW, numberOfMembers, maxSaves;
 	Character ethan;
-	static Character submarine;
 	IMF[] members;
 	int currentCarry, totalSaved, totalDamage;
 
@@ -12,19 +12,19 @@ public class MissionImpossibleState extends State {
 		String[] split = state.split(";");
 		// Grid Dimensions
 		String[] gridD = split[0].split(",");
-		gridW = Integer.parseInt(gridD[0]);
-		gridH = Integer.parseInt(gridD[1]);
+		MissionImpossible.gridW = Integer.parseInt(gridD[0]);
+		MissionImpossible.gridH = Integer.parseInt(gridD[1]);
 		// Ethan
 		String[] ethanP = split[1].split(",");
 		ethan = new Character(Integer.parseInt(ethanP[0]), Integer.parseInt(ethanP[1]));
 		// Submarine
 		String[] subMarineP = split[2].split(",");
-		submarine = new Character(Integer.parseInt(subMarineP[0]), Integer.parseInt(subMarineP[1]));
+		MissionImpossible.submarine = new Character(Integer.parseInt(subMarineP[0]), Integer.parseInt(subMarineP[1]));
 		// IMF Positions and Health
 		String[] IMFP = split[3].split(",");
 		String[] IMFH = split[4].split(",");
-		numberOfMembers = IMFH.length;
-		members = new IMF[numberOfMembers];
+		MissionImpossible.numberOfMembers = IMFH.length;
+		members = new IMF[MissionImpossible.numberOfMembers];
 		for (int i = 0, j = 0; i < IMFP.length; i += 2, j++) {
 			int posX = Integer.parseInt(IMFP[i]);
 			int posY = Integer.parseInt(IMFP[i + 1]);
@@ -33,12 +33,24 @@ public class MissionImpossibleState extends State {
 		}
 		// Max Saves Per Once
 		String[] c = split[5].split(",");
-		maxSaves = Integer.parseInt(c[0]);
+		MissionImpossible.maxSaves = Integer.parseInt(c[0]);
 		currentCarry = 0;
 	}
 
-	public MissionImpossibleState() {
+	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved, int currentCarry, int totalDamage,
+			Character ethan) {
+		this.members = new IMF[numberOfMembers - totalSaved - currentCarry];
 
+		this.totalSaved = totalSaved;
+
+		this.currentCarry = currentCarry;
+		this.totalDamage = totalDamage;
+		this.ethan = ethan.clone();
+
+		for (int i = 0, j = 0; i < members.length; i++) {
+			if (!members[i].picked)
+				this.members[j++] = members[i].clone();
+		}
 	}
 
 	Character getEthan() {
@@ -54,7 +66,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	boolean moveDown() {
-		if (ethan.posX + 1 < gridH) {
+		if (ethan.posX + 1 < MissionImpossible.gridH) {
 			ethan.posX++;
 			return true;
 		}
@@ -70,45 +82,51 @@ public class MissionImpossibleState extends State {
 	}
 
 	boolean moveRight() {
-		if (ethan.posY + 1 < gridW) {
+		if (ethan.posY + 1 < MissionImpossible.gridW) {
 			ethan.posY++;
 			return true;
 		}
 		return false;
 	}
 
-	boolean pickUp() {
-		if (currentCarry == maxSaves)
+	boolean pickUp(int memberIdx) {
+		if (currentCarry == MissionImpossible.maxSaves)
 			return false;
-		for (IMF member : members)
-			if (member.posX == ethan.posX && member.posY == ethan.posY && !member.saved) {
-				currentCarry++;
-				member.saved = true;
-				return true;
-			}
-
-		return false;
+		IMF member = members[memberIdx];
+		if (member.picked)
+			return false;
+		decreaseHealth(MissionImpossible.distance(ethan, member));
+		currentCarry++;
+		member.picked = true;
+		ethan.posX = member.posX;
+		ethan.posY = member.posY;
+		decreaseHealth(1);
+		return true;
 	}
 
-	boolean leave() {
-		if (ethan.posX == submarine.posX && ethan.posY == submarine.posY && currentCarry > 0) {
+	boolean drop() {
+		if (currentCarry > 0) {
 			totalSaved += currentCarry;
 			currentCarry = 0;
+			decreaseHealth(MissionImpossible.distance(ethan, MissionImpossible.submarine) + 1);
+			ethan.posX = MissionImpossible.submarine.posX;
+			ethan.posY = MissionImpossible.submarine.posY;
+
 			return true;
 		}
 		return false;
 	}
 
 	int getRemainingMembers() {
-		return numberOfMembers - totalSaved;
+		return MissionImpossible.numberOfMembers - totalSaved;
 	}
 
-	void decreaseHealth() {
+	void decreaseHealth(int time) {
 
 		for (IMF imf : members) {
-			if (imf.saved)
+			if (imf.picked)
 				continue;
-			int decrease = Math.min(2, 100 - imf.health);
+			int decrease = Math.min(2 * time, 100 - imf.health);
 			imf.health += decrease;
 			totalDamage += decrease;
 		}
@@ -124,16 +142,7 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public boolean equals(State other) {
-		MissionImpossibleState s = MissionImpossible.cast(other);
-		boolean result = true;
-
-		for (int i = 0; i < numberOfMembers; i++) {
-			result = result && (s.members[i].saved == members[i].saved) && (s.members[i].posX == members[i].posX)
-					&& (s.members[i].posY == members[i].posY && s.members[i].health == members[i].health);
-		}
-		result = result && (s.ethan.posX == ethan.posX) && (s.ethan.posY == ethan.posY);
-		result = result && currentCarry == s.currentCarry && totalDamage == s.totalDamage && totalSaved == s.totalSaved;
-		return result;
+		return this.compareTo(other) == 0;
 
 	}
 
@@ -147,37 +156,24 @@ public class MissionImpossibleState extends State {
 
 	@Override
 	public MissionImpossibleState clone() {
-		MissionImpossibleState newState = new MissionImpossibleState();
-
-		newState.members = new IMF[numberOfMembers];
-
-		newState.totalSaved = totalSaved;
-
-		newState.currentCarry = currentCarry;
-		newState.totalDamage = totalDamage;
-		newState.ethan = new Character(ethan.posX, ethan.posY);
-
-		for (int i = 0; i < numberOfMembers; i++) {
-			newState.members[i] = new IMF(members[i].posX, members[i].posY, members[i].health, members[i].saved);
-
-		}
-		return newState;
+		return new MissionImpossibleState(MissionImpossible.numberOfMembers, members, totalSaved, currentCarry,
+				totalDamage, ethan);
 
 	}
 
 	@Override
 	public String toString() {
 		String res = "";
-		for (int i = 0; i < gridH; i++) {
-			for (int j = 0; j < gridW; j++) {
+		for (int i = 0; i < MissionImpossible.gridH; i++) {
+			for (int j = 0; j < MissionImpossible.gridW; j++) {
 				String cell = "";
 				if (ethan.posX == i && ethan.posY == j)
 					cell += "ETHAN ";
-				if (submarine.posX == i && submarine.posY == j)
+				if (MissionImpossible.submarine.posX == i && MissionImpossible.submarine.posY == j)
 					cell += "SUBM ";
 				String mem = "NULL ";
 				for (IMF m : members)
-					if (m.posX == i && m.posY == j && !m.saved)
+					if (m.posX == i && m.posY == j && !m.picked)
 						mem = "(" + m.health + ")";
 				cell += mem;
 				while (cell.length() < 16)
@@ -204,9 +200,9 @@ public class MissionImpossibleState extends State {
 			return Integer.compare(totalDamage, s.totalDamage);
 		if (totalSaved != s.totalSaved)
 			return Integer.compare(totalSaved, s.totalSaved);
-		for (int i = 0; i < numberOfMembers; i++) {
-			if (members[i].saved != s.members[i].saved)
-				return members[i].saved ? 1 : -1;
+		for (int i = 0; i < members.length; i++) {
+			if (members[i].picked != s.members[i].picked)
+				return members[i].picked ? 1 : -1;
 			if (members[i].health != s.members[i].health)
 				return Integer.compare(members[i].health, s.members[i].health);
 		}

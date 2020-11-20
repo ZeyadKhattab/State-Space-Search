@@ -1,4 +1,4 @@
-package Project;
+package code.mission;
 
 public class Character {
 	int posX, posY;
@@ -11,5 +11,9 @@ public class Character {
 	public Character(int posX, int posY) {
 		this.posX = posX;
 		this.posY = posY;
+	}
+	
+	public Character clone() {
+		return new Character(posX, posY);
 	}
 }

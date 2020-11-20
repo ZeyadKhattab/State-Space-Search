@@ -1,4 +1,4 @@
-package Project;
+package code.generic;
 
 public class SearchTreeNode {
 	State state;
@@ -21,5 +21,16 @@ public class SearchTreeNode {
 		operator = null;
 		cost = problem.pathCost(this);
 	}
-
+	
+	public State getState() {
+		return state;
+	}
+	
+	public SearchTreeNode getParent() {
+		return parent;
+	}
+	
+	public Operator getOperator() {
+		return operator;
+	}
 }
