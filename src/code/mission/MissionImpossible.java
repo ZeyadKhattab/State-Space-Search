@@ -148,8 +148,21 @@ public class MissionImpossible extends SearchProblem {
 			sb.append(operatorToString(from, to));
 		}
 		sb.deleteCharAt(sb.length() - 1);
-		sb.append(";" + cast(goalNode.getState()).getNumberOfDeaths() + ";");
-		IMF[] members = cast(goalNode.getState()).getMembers();
+		int deaths = cast(goalNode.getState()).getNumberOfDeaths();
+		IMF[] members = cast(pathToGoal.get(0).getState()).getMembers();
+		for (SearchTreeNode node : pathToGoal) {
+			MissionImpossibleOperator operator = (MissionImpossibleOperator) node.getOperator();
+
+			if (operator != null && operator.getOperator().equals(MissionImpossibleOperator.Operator.PICKUP)) {
+				int memberIdx = operator.getMemberIdx();
+				IMF pickedUp = cast(node.getState()).getMember(memberIdx);
+				for (IMF m : members)
+					if (m.posX == pickedUp.posX && m.posY == pickedUp.posY)
+						m.health = pickedUp.health;
+			}
+		}
+
+		sb.append(";" + deaths + ";");
 		for (int i = 0; i < members.length; i++) {
 			if (i > 0)
 				sb.append(",");

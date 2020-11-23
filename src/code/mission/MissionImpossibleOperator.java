@@ -19,5 +19,11 @@ public class MissionImpossibleOperator extends Operator {
 	public MissionImpossibleOperator(Operator operator) {
 		this.operator = operator;
 	}
+	public Operator getOperator() {
+		return operator;
+	}
+	public int getMemberIdx() {
+		return memberIdx;
+	}
 
 }
