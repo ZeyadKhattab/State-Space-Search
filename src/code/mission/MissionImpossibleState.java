@@ -5,7 +5,7 @@ import code.generic.State;
 public class MissionImpossibleState extends State {
 	Character ethan;
 	IMF[] members;
-	int currentCarry, totalSaved, totalDamage;
+	int currentCarry, totalSaved, totalDamage, deaths;
 
 	// 5,5;1,2;4,0;0,3,2,1,3,0,3,2,3,4,4,3;20,30,90,80,70,60;3
 	public MissionImpossibleState(String state) {
@@ -30,6 +30,7 @@ public class MissionImpossibleState extends State {
 			int posY = Integer.parseInt(IMFP[i + 1]);
 			int health = Integer.parseInt(IMFH[j]);
 			members[j] = new IMF(posX, posY, health);
+			totalDamage += health;
 		}
 		// Max Saves Per Once
 		String[] c = split[5].split(",");
@@ -38,7 +39,7 @@ public class MissionImpossibleState extends State {
 	}
 
 	public MissionImpossibleState(int numberOfMembers, IMF[] members, int totalSaved, int currentCarry, int totalDamage,
-			Character ethan) {
+			Character ethan, int deaths) {
 		this.members = new IMF[numberOfMembers - totalSaved - currentCarry];
 
 		this.totalSaved = totalSaved;
@@ -46,7 +47,7 @@ public class MissionImpossibleState extends State {
 		this.currentCarry = currentCarry;
 		this.totalDamage = totalDamage;
 		this.ethan = ethan.clone();
-
+		this.deaths = deaths;
 		for (int i = 0, j = 0; i < members.length; i++) {
 			if (!members[i].picked)
 				this.members[j++] = members[i].clone();
@@ -128,6 +129,8 @@ public class MissionImpossibleState extends State {
 				continue;
 			int decrease = Math.min(2 * time, 100 - imf.health);
 			imf.health += decrease;
+			if (imf.health == 100 && decrease > 0)
+				deaths++;
 			totalDamage += decrease;
 		}
 	}
@@ -147,17 +150,14 @@ public class MissionImpossibleState extends State {
 	}
 
 	public int getNumberOfDeaths() {
-		int ans = 0;
-		for (IMF member : members)
-			if (member.health == 100)
-				ans++;
-		return ans;
+
+		return deaths;
 	}
 
 	@Override
 	public MissionImpossibleState clone() {
 		return new MissionImpossibleState(MissionImpossible.numberOfMembers, members, totalSaved, currentCarry,
-				totalDamage, ethan);
+				totalDamage, ethan, deaths);
 
 	}
 
@@ -200,7 +200,15 @@ public class MissionImpossibleState extends State {
 			return Integer.compare(totalDamage, s.totalDamage);
 		if (totalSaved != s.totalSaved)
 			return Integer.compare(totalSaved, s.totalSaved);
+		if (deaths != s.deaths)
+			return Integer.compare(deaths, s.deaths);
+		if (members.length != s.members.length)
+			return Integer.compare(members.length, s.members.length);
 		for (int i = 0; i < members.length; i++) {
+			if (members[i].posX != s.members[i].posX)
+				return Integer.compare(members[i].posX, s.members[i].posX);
+			if (members[i].posY != s.members[i].posY)
+				return Integer.compare(members[i].posY, s.members[i].posY);
 			if (members[i].picked != s.members[i].picked)
 				return members[i].picked ? 1 : -1;
 			if (members[i].health != s.members[i].health)
