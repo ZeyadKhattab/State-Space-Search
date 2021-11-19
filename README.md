@@ -1,4 +1,10 @@
-# This is the starter code for Project 1
+# State Space Search
 
-### You should NOT alter the structure of any packages
-### You should NOT alter any tests
+## Different Search implementations for a [TSP](https://en.wikipedia.org/wiki/Travelling_salesman_problem) variant
+
+- DFS
+- BFS
+- Iterative deepening search
+- Uniform-Cost Search
+- Greedy Search
+- A* Search
